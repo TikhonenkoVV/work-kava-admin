@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/work-kava-admin/static/css/main.db317afe.css",
+    "main.js": "/work-kava-admin/static/js/main.c8a66917.js",
+    "static/js/437.b3396a15.chunk.js": "/work-kava-admin/static/js/437.b3396a15.chunk.js",
+    "static/media/auth-background-250.jpg": "/work-kava-admin/static/media/auth-background-250.5a5fe28981628d18860a.jpg",
+    "static/media/sprite.svg": "/work-kava-admin/static/media/sprite.bb7579f98753ad4fed50c9232aa88847.svg",
+    "index.html": "/work-kava-admin/index.html",
+    "main.db317afe.css.map": "/work-kava-admin/static/css/main.db317afe.css.map",
+    "main.c8a66917.js.map": "/work-kava-admin/static/js/main.c8a66917.js.map",
+    "437.b3396a15.chunk.js.map": "/work-kava-admin/static/js/437.b3396a15.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.db317afe.css",
+    "static/js/main.c8a66917.js"
+  ]
+}
