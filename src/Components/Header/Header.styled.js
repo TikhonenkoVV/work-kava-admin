@@ -4,7 +4,9 @@ import { Container } from 'Components/Global/components.styled';
 export const HeaderStyled = styled.header`
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid gray;
+  background-color: ${({ theme }) => theme.colors.primaryBackround};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.primaryText};
+  fill: ${({ theme }) => theme.colors.primaryText};
 `;
 
 export const ContainerStyled = styled(Container)`

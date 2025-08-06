@@ -1,4 +1,7 @@
-import { Container } from 'Components/Global/components.styled';
+import {
+  Container,
+  StyledHomeSection
+} from 'Components/Global/components.styled';
 import { ProductList } from 'Components/ProductList/ProductList';
 import { useAuth } from 'hooks/useAuth';
 import { useEffect } from 'react';
@@ -40,7 +43,7 @@ const Home = () => {
   }, [dispatch, pathname, isLoggedIn]);
 
   return (
-    <section>
+    <StyledHomeSection>
       <Container>
         <button>Add produkt</button>
         {pathname === '/coffee-classic' && (
@@ -54,7 +57,7 @@ const Home = () => {
         {pathname === '/rolls' && <ProductList collection={rolls} />}
         {pathname === '/hot-dogs' && <ProductList collection={hotDogs} />}
       </Container>
-    </section>
+    </StyledHomeSection>
   );
 };
 

@@ -6,8 +6,7 @@ export const BackdropHeader = styled(Backdrop)`
   align-items: center;
   flex-direction: column;
   padding: 180px 0 50px 0;
-
-  background-color: ${props => props.theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.primaryBackground};
 
   &::before {
     content: '';
@@ -28,7 +27,6 @@ export const CloseButton = styled.button`
   position: absolute;
   right: 24px;
   top: 10px;
-  fill: ${props => props.theme.colors.primary};
 `;
 
 export const SetBtn = styled.button`
@@ -38,8 +36,6 @@ export const SetBtn = styled.button`
   gap: 16px;
   font-size: 32px;
   line-height: 1.25;
-  fill: ${props => props.theme.colors.primary};
-  color: ${props => props.theme.colors.primary};
 `;
 
 export const UserBtn = styled(SetBtn)`

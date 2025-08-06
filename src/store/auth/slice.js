@@ -9,12 +9,14 @@ import {
   updateAvatar
 } from './operations';
 
+const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
+
 const initialState = {
   user: {
     name: '',
     email: '',
     avatarURL: '',
-    theme: 'dark'
+    theme: darkThemeMq.matches ? 'dark' : 'light'
   },
   accessToken: null,
   refreshToken: null,

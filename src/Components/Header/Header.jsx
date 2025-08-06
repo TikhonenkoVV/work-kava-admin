@@ -25,13 +25,13 @@ export const Header = () => {
   return (
     <HeaderStyled>
       <ContainerStyled>
-        <SvgIcon w={150} h={32} icon={'logo'} style={{ fill: '#000' }} />
+        <SvgIcon w={150} h={32} icon={'logo'} style={{ fill: 'inherit' }} />
         <BurgerMenuButton
           type="button"
           onClick={handleOpenModal}
           aria-label="menu"
         >
-          <SvgIcon w={32} h={32} icon={'burger'} style={{ fill: '#000' }} />
+          <SvgIcon w={32} h={32} icon={'burger'} style={{ fill: 'inherit' }} />
         </BurgerMenuButton>
       </ContainerStyled>
     </HeaderStyled>

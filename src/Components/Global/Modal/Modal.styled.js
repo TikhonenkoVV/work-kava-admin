@@ -6,11 +6,11 @@ export const Backdrop = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: ${props => props.theme.colors.backdrop};
+  background-color: ${({ theme }) => theme.colors.backdrop};
   z-index: 6;
   box-sizing: border-box;
 
-  animation: ${props => props.theme.baseTransition} alternate backdrop;
+  animation: ${({ theme }) => theme.baseTransition} alternate backdrop;
 
   @keyframes backdrop {
     from {
@@ -28,11 +28,11 @@ export const ModalContent = styled.div`
   left: 50%;
   width: 100%;
   max-width: 366px;
-  background: ${props => props.theme.colors.white};
+  background: ${({ theme }) => theme.colors.primaryBackround};
   transform: translate(-50%, -50%);
   border-radius: 10px;
 
-  animation: ${props => props.theme.baseTransition} alternate modal-content;
+  animation: ${({ theme }) => theme.baseTransition} alternate modal-content;
 
   @keyframes modal-content {
     from {
@@ -43,7 +43,7 @@ export const ModalContent = styled.div`
     }
   }
 
-  @media screen and (${props => props.theme.devices.tablet}) {
+  @media screen and (${({ theme }) => theme.devices.tablet}) {
     max-width: 500px;
   }
 `;

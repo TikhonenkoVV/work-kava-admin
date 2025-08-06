@@ -41,7 +41,7 @@ export const Auth = () => {
     <StyledSectoion>
       <AuthFormWrapper>
         <AuthLogo>
-          <SvgIcon w={190} h={41} icon={'logo'} style={{ fill: '#000' }} />
+          <SvgIcon w={190} h={41} icon={'logo'} />
           <Subtitle>content managment</Subtitle>
         </AuthLogo>
         <AuthCaption>Log in</AuthCaption>

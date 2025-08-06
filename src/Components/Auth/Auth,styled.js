@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
-import background from '../../images/auth-background-250.jpg';
+import lightBackground from '../../images/auth-background-250.jpg';
+import darkBackground from '../../images/auth-background-dark-250.jpg';
 
 export const StyledSectoion = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-image: url('${background}');
+  ${({ curTheme }) =>
+    curTheme === 'dark'
+      ? 'background-image: url(' + darkBackground + ')'
+      : 'background-image: url(' + lightBackground + ')'};
   background-repeat: repeat;
 `;
 
@@ -19,8 +22,8 @@ export const AuthFormWrapper = styled.div`
   padding-top: 16px;
   padding-right: 16px;
   padding-bottom: 16px;
-  border: 1px solid #000;
-  background-color: #fff;
+  border: 1px solid ${({ theme }) => theme.colors.primaryText};
+  background-color: ${({ theme }) => theme.colors.primaryBackground};
 `;
 
 export const AuthLogo = styled.div`
@@ -49,15 +52,19 @@ export const AuthLabel = styled.label`
   position: relative;
   width: 100%;
 `;
+
 export const AuthInput = styled.input`
   width: 100%;
   height: 40px;
   outline: unset;
-  border: 1px solid #000;
+  background-color: ${({ theme }) => theme.colors.primaryBackground};
+  border: 1px solid ${({ theme }) => theme.colors.primaryText};
   padding-left: 10px;
   padding-top: 10px;
   padding-right: 10px;
   padding-bottom: 10px;
+  color: inherit;
+  caret-color: currentColor;
   &[name='password'] {
     padding-right: 40px;
   }
@@ -76,5 +83,5 @@ export const SubmitButton = styled.button`
   width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
-  border: 1px solid #000;
+  border: 1px solid ${({ theme }) => theme.colors.primaryText};
 `;
