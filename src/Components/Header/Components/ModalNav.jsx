@@ -3,6 +3,7 @@ import {
   BackdropHeader,
   CloseButton,
   LangBtn,
+  SetButtonWrapper,
   UserBtn
 } from './ModalNav.styled';
 import { Navigation } from './Navigation';
@@ -22,20 +23,20 @@ export const ModalNav = ({ action }) => {
       <CloseButton type="button" onClick={action} aria-label="close">
         <SvgIcon w={32} h={32} icon="close" />
       </CloseButton>
-      <UserBtn type="button">
-        <SvgIcon w={40} h={40} icon={'avatar'} aria-label="icon user" />
-        Sign Up
-      </UserBtn>
       <Navigation action={action} />
-      <LangBtn type="button">
-        <img
-          width={40}
-          height={40}
-          src={`${CLOUD_NAME}/flags/flag-uk.jpg`}
-          alt="flag"
-        />
-        English
-      </LangBtn>
+      <SetButtonWrapper>
+        <LangBtn type="button">
+          <img
+            width={40}
+            height={40}
+            src={`${CLOUD_NAME}/flags/flag-uk.jpg`}
+            alt="flag"
+          />
+        </LangBtn>
+        <UserBtn type="button">
+          <SvgIcon w={40} h={40} icon={'avatar'} aria-label="icon user" />
+        </UserBtn>
+      </SetButtonWrapper>
     </BackdropHeader>
   );
 };

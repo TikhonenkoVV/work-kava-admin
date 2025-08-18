@@ -11,18 +11,18 @@ import {
   SubmitButton,
   Subtitle
 } from './Auth,styled';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from 'store/auth/operations';
 import { useState } from 'react';
+import { selectTheme } from 'store/auth/selectors';
 
 export const Auth = () => {
   const dispatch = useDispatch();
   const [showPass, setShowPass] = useState({ showPass: false });
+  const currTheme = useSelector(selectTheme);
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log(e.target);
-
     const form = e.currentTarget;
     dispatch(
       logIn({
@@ -36,6 +36,8 @@ export const Auth = () => {
   const hendleShowPass = () => {
     setShowPass(!showPass);
   };
+
+  console.log(currTheme);
 
   return (
     <StyledSectoion>

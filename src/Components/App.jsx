@@ -95,6 +95,18 @@ const App = () => {
               <PrivateRoute redirectTo="/auth" component={<HomePage />} />
             }
           />
+          <Route
+            path="/add-product"
+            element={
+              <PrivateRoute redirectTo="/auth" component={<HomePage />} />
+            }
+          />
+          <Route
+            path="/edit:id"
+            element={
+              <PrivateRoute redirectTo="/auth" component={<HomePage />} />
+            }
+          />
           <Route path="/" element={<Navigate to={'/coffee-classic'} />} />
           <Route path="*" element={<Navigate to={'/coffee-classic'} />} />
         </Route>

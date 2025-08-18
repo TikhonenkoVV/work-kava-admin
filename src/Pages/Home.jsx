@@ -1,10 +1,11 @@
+import { AddForm } from 'Components/AddForm/AddForm';
 import {
   Container,
   StyledHomeSection
 } from 'Components/Global/components.styled';
 import { ProductList } from 'Components/ProductList/ProductList';
 import { useAuth } from 'hooks/useAuth';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getBurgers } from 'store/burgers/operations';
@@ -31,31 +32,74 @@ const Home = () => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
+  const [collectionDetales, setCollectionDetales] = useState({
+    title: 'empty',
+    department: 'empty'
+  });
+
   useEffect(() => {
     if (isLoggedIn) {
-      if (pathname === '/coffee-classic') dispatch(getCoffeeClassics());
-      if (pathname === '/coffee-with-milk') dispatch(getCoffeeWithMilk());
-      if (pathname === '/desserts') dispatch(getDesserts());
-      if (pathname === '/burgers') dispatch(getBurgers());
-      if (pathname === '/rolls') dispatch(getRolls());
-      if (pathname === '/hot-dogs') dispatch(getHotDogs());
+      if (pathname === '/coffee-classic') {
+        dispatch(getCoffeeClassics());
+        setCollectionDetales({ title: 'Coffee classic', department: 'cafe' });
+      }
+      if (pathname === '/coffee-with-milk') {
+        dispatch(getCoffeeWithMilk());
+        setCollectionDetales({ title: 'Coffee with milk', department: 'cafe' });
+      }
+      if (pathname === '/desserts') {
+        dispatch(getDesserts());
+        setCollectionDetales({ title: 'Desserts', department: 'cafe' });
+      }
+      if (pathname === '/burgers') {
+        dispatch(getBurgers());
+        setCollectionDetales({ title: 'Burgers', department: 'fastfood' });
+      }
+      if (pathname === '/rolls') {
+        dispatch(getRolls());
+        setCollectionDetales({
+          title: 'Rolls',
+          department: 'fastfood'
+        });
+      }
+      if (pathname === '/hot-dogs') {
+        dispatch(getHotDogs());
+        setCollectionDetales({
+          title: 'Hot dogs',
+          department: 'fastfood'
+        });
+      }
     }
   }, [dispatch, pathname, isLoggedIn]);
 
   return (
     <StyledHomeSection>
       <Container>
-        <button>Add produkt</button>
         {pathname === '/coffee-classic' && (
-          <ProductList collection={coffeeClassics} />
+          <ProductList
+            collection={coffeeClassics}
+            detales={collectionDetales}
+          />
         )}
         {pathname === '/coffee-with-milk' && (
-          <ProductList collection={coffeeWithMilks} />
+          <ProductList
+            collection={coffeeWithMilks}
+            detales={collectionDetales}
+          />
         )}
-        {pathname === '/desserts' && <ProductList collection={desserts} />}
-        {pathname === '/burgers' && <ProductList collection={burgers} />}
-        {pathname === '/rolls' && <ProductList collection={rolls} />}
-        {pathname === '/hot-dogs' && <ProductList collection={hotDogs} />}
+        {pathname === '/desserts' && (
+          <ProductList collection={desserts} detales={collectionDetales} />
+        )}
+        {pathname === '/burgers' && (
+          <ProductList collection={burgers} detales={collectionDetales} />
+        )}
+        {pathname === '/rolls' && (
+          <ProductList collection={rolls} detales={collectionDetales} />
+        )}
+        {pathname === '/hot-dogs' && (
+          <ProductList collection={hotDogs} detales={collectionDetales} />
+        )}
+        {pathname === '/add-product' && <AddForm path={pathname} />}
       </Container>
     </StyledHomeSection>
   );

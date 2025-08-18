@@ -29,27 +29,28 @@ export const CloseButton = styled.button`
   top: 10px;
 `;
 
+export const SetButtonWrapper = styled.div`
+  display: flex;
+  column-gap: 16px;
+  margin-top: auto;
+`;
+
 export const SetBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  font-size: 32px;
-  line-height: 1.25;
 `;
 
 export const UserBtn = styled(SetBtn)`
-  margin-bottom: 16px;
-  transition: fill ${props => props.theme.baseTransition},
-    color ${props => props.theme.baseTransition};
+  transition: fill ${({ theme }) => theme.baseTransition},
+    color ${({ theme }) => theme.baseTransition};
   &:hover {
-    fill: ${props => props.theme.colors.whiteButtonHover};
-    color: ${props => props.theme.colors.whiteButtonHover};
+    fill: ${({ theme }) => theme.colors.whiteButtonHover};
+    color: ${({ theme }) => theme.colors.whiteButtonHover};
   }
 `;
 
 export const LangBtn = styled(SetBtn)`
-  margin-top: auto;
   transition: color ${props => props.theme.baseTransition};
   &:hover {
     border-color: ${props => props.theme.colors.whiteButtonHover};

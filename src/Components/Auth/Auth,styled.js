@@ -6,8 +6,9 @@ export const StyledSectoion = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  ${({ curTheme }) =>
-    curTheme === 'dark'
+  height: 100vh;
+  ${({ theme }) =>
+    theme.colors.primaryText === '#ffffff'
       ? 'background-image: url(' + darkBackground + ')'
       : 'background-image: url(' + lightBackground + ')'};
   background-repeat: repeat;
