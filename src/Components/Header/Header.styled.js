@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Container } from 'Components/Global/components.styled';
+import { Container } from 'styles/components.styled';
 
 export const HeaderStyled = styled.header`
   padding-top: 10px;

@@ -30,6 +30,7 @@ export const CloseButton = styled.button`
 `;
 
 export const SetButtonWrapper = styled.div`
+  position: relative;
   display: flex;
   column-gap: 16px;
   margin-top: auto;
@@ -39,6 +40,7 @@ export const SetBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 `;
 
 export const UserBtn = styled(SetBtn)`
@@ -57,11 +59,15 @@ export const LangBtn = styled(SetBtn)`
     color: ${props => props.theme.colors.whiteButtonHover};
   }
   & img {
+    pointer-events: none;
     width: 40px;
     height: 40px;
     border: 2px solid ${props => props.theme.colors.white};
     border-radius: 10px;
     transition: border-color ${props => props.theme.baseTransition};
+  }
+  & span {
+    pointer-events: none;
   }
   &:hover img {
     border-color: ${props => props.theme.colors.whiteButtonHover};

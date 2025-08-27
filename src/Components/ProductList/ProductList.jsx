@@ -1,4 +1,4 @@
-import { CLOUD_NAME } from 'utils/GlobalUtils';
+import { useSelector } from 'react-redux';
 import {
   CardButton,
   CardButtonContainer,
@@ -10,37 +10,35 @@ import {
 } from './ProductList.styled';
 import { SvgIcon } from 'Components/Global/SvgIcon/SvgIcon';
 import { useLocation } from 'react-router-dom';
+import { colors, getMaxIndex } from 'services/productList';
+import { ADD_PRODUCT_PATH, LOCAL_DE, LOCAL_EN } from 'utils/GlobalUtils';
+import { selectUser } from 'store/auth/selectors';
 
-const colors = [
-  '#ffffff',
-  '#bdff99',
-  '#ffc999',
-  '#f1c2f2',
-  '#d8f1fe',
-  '#f5ffb9'
-];
+export const ProductList = ({ data, title }) => {
+  const { local } = useSelector(selectUser);
 
-export const ProductList = ({ collection, detales }) => {
-  const location = useLocation();
+  const { pathname } = useLocation();
+
+  const index = getMaxIndex(data) + 1;
 
   return (
     <>
-      <CardButton to={'/add-product'} state={{ from: location }}>
+      <CardButton to={ADD_PRODUCT_PATH} state={{ props: { pathname, index } }}>
         <SvgIcon w={24} h={24} icon={'add'} />
       </CardButton>
-      <CollectionTitle>{detales.title}</CollectionTitle>
+      <CollectionTitle>{title}</CollectionTitle>
       <ul>
-        {collection.map((el, i) => (
+        {data?.map((el, i) => (
           <StyledLi key={el._id}>
-            <StyledImage
-              src={
-                CLOUD_NAME + detales.department + '/' + el.image + '-mobile.png'
-              }
-              alt={el.title}
-              color={colors[i]}
-            />
+            <StyledImage src={el.imgURL} alt={el.title_en} color={colors[i]} />
             <CardContainer>
-              <CardTitle>{el.title}</CardTitle>
+              <CardTitle>
+                {local === LOCAL_EN
+                  ? el.title_en
+                  : local === LOCAL_DE
+                  ? el.title_de
+                  : el.title_ua}
+              </CardTitle>
               <CardButtonContainer>
                 <CardButton>
                   <SvgIcon w={24} h={24} icon={'edit'} />

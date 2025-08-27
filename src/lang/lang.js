@@ -1,0 +1,50 @@
+export const lang = {
+  'en-UK': {
+    coffeeClassicTitle: 'Coffee classic',
+    coffeeWithMilkTitle: 'Coffee with milk',
+    dessertsTitle: 'Desserts',
+    burgersTitle: 'Burgers',
+    rollsTitle: 'Rolls',
+    hotDogsTitle: 'Hot dogs',
+    nameTitle: 'Name',
+    priceTitle: 'Price',
+    ingredientsTitle: 'Ingredients',
+    weightTitle: 'Weight',
+    imagesTitle: 'Images',
+    selectFile: 'Select file',
+    submit: 'Submit',
+    addNewProduct: 'Add new product'
+  },
+  'de-DE': {
+    coffeeClassicTitle: 'Schwarzer Kaffee',
+    coffeeWithMilkTitle: 'Milchkaffee',
+    dessertsTitle: 'Desserts',
+    burgersTitle: 'Burger',
+    rollsTitle: 'Rollen',
+    hotDogsTitle: 'Hotdogs',
+    nameTitle: 'Name',
+    priceTitle: 'Preis',
+    ingredientsTitle: 'Zutaten',
+    weightTitle: 'Gewicht',
+    imagesTitle: 'Bilder',
+    selectFile: 'Datei auswählen',
+    submit: 'Absenden',
+    addNewProduct: 'Neues Produkt hinzufügen'
+  },
+  'uk-UA': {
+    coffeeClassicTitle: 'Класична кава',
+    coffeeWithMilkTitle: 'Кава з молоком',
+    dessertsTitle: 'Десерти',
+    burgersTitle: 'Бургери',
+    rollsTitle: 'Роли',
+    hotDogsTitle: 'Хот-доги',
+    nameTitle: 'Назва',
+    priceTitle: 'Ціна',
+    ingredientsTitle: 'Склад',
+    weightTitle: 'Вага',
+    imagesTitle: 'Зображення',
+    selectFile: 'Обрати файл',
+    submit: 'Підтвердити',
+    addNewProduct: 'Додати новий продукт'
+  }
+};

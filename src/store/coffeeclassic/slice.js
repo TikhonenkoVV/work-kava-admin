@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCoffeeClassics } from './operations';
+import { addCoffeeClassic, getCoffeeClassics } from './operations';
 
 const initialState = {
   coffeeClassics: [],
+  image: null,
   isLoading: false,
   error: null
 };
@@ -22,6 +23,19 @@ const coffeeClassicSlice = createSlice({
         state.error = null;
       })
       .addCase(getCoffeeClassics.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(addCoffeeClassic.pending, (state, { payload }) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(addCoffeeClassic.fulfilled, (state, { payload }) => {
+        state.coffeeClassics.push(payload.coffee_classic);
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(addCoffeeClassic.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       });

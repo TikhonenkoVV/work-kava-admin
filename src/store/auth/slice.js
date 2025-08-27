@@ -8,6 +8,7 @@ import {
   updateUser,
   updateAvatar
 } from './operations';
+import { LOCAL_EN } from 'utils/GlobalUtils';
 
 const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -16,7 +17,8 @@ const initialState = {
     name: '',
     email: '',
     avatarURL: '',
-    theme: darkThemeMq.matches ? 'dark' : 'light'
+    theme: darkThemeMq.matches ? 'dark' : 'light',
+    local: LOCAL_EN
   },
   accessToken: null,
   refreshToken: null,

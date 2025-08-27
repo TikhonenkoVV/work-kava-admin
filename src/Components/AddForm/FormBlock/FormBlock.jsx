@@ -1,11 +1,6 @@
 import { text } from 'services/formBlockServices';
-import {
-  BlockTitle,
-  Caption,
-  StyledInput,
-  StyledLabel,
-  StyledTextarea
-} from './FormBlock.styled';
+import { StyledInput, StyledTextarea } from './FormBlock.styled';
+import { BlockTitle, Caption, StyledLabel } from 'styles/components.styled';
 
 export const FormBlock = ({ data, title, onChange }) => {
   return (

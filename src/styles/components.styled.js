@@ -14,3 +14,23 @@ export const Container = styled.div`
     width: ${props => props.theme.sizes.desktop}px;
   }
 `;
+
+export const BlockTitle = styled.h2`
+  margin-bottom: 10px;
+`;
+
+export const StyledLabel = styled.label`
+  display: grid;
+  grid-template-columns: 130px auto;
+  text-align: start;
+  gap: 8px;
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+`;
+
+export const Caption = styled.span`
+  display: flex;
+  align-items: center;
+  height: 32px;
+`;

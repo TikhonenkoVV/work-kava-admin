@@ -1,10 +1,16 @@
-import { Caption, ChangeFileButton, StyledLabel } from './FormBlockFile.styled';
+import { BlockTitle, Caption, StyledLabel } from 'styles/components.styled';
+import { ChangeFileButton } from './FormBlockFile.styled';
+import { useSelector } from 'react-redux';
+import { selectUser } from 'store/auth/selectors';
+import { lang } from 'lang/lang';
 
 export const FormBlockFile = ({ onChange }) => {
-  const data = ['img', 'img2x', 'webpImg', 'webpImg2x'];
-  const title = ['Image', 'Image 2x', 'Webp', 'Webp 2x'];
+  const { local } = useSelector(selectUser);
+  const data = ['img', 'webpImg'];
+  const title = ['Jpg/Png', 'Webp'];
   return (
     <div>
+      <BlockTitle>{lang[local].imagesTitle}</BlockTitle>
       {data.map((el, i) => (
         <StyledLabel key={el}>
           <Caption>{title[i]}</Caption>
@@ -13,7 +19,7 @@ export const FormBlockFile = ({ onChange }) => {
             type="button"
             onClick={() => document.getElementById(`${el}`).click()}
           >
-            Select file
+            {lang[local].selectFile}
           </ChangeFileButton>
         </StyledLabel>
       ))}

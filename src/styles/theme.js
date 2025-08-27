@@ -18,7 +18,8 @@ export const lightTheme = Object.freeze({
     primaryBackground: '#ffffff',
     primaryText: '#303030ff',
     backdrop: 'rgba(0, 0, 0, 0.40)',
-    validationError: '#ED4337'
+    validationError: '#ED4337',
+    langMenuBackground: '#dbdbdbff'
   }
 });
 
@@ -27,7 +28,8 @@ export const darkTheme = Object.freeze({
     primaryBackground: '#303030ff',
     primaryText: '#ffffff',
     backdrop: 'rgba(0, 0, 0, 0.40)',
-    validationError: '#ED4337'
+    validationError: '#ED4337',
+    langMenuBackground: '#252525ff'
   }
 });
 

@@ -115,10 +115,9 @@ export const refreshToken = createAsyncThunk(
       return thunkAPI.rejectWithValue();
     }
 
+    setAuthHeader(persistToken);
     try {
-      const { data } = await workKavaInnstance.post('/auth/refresh', {
-        refreshToken: persistToken
-      });
+      const { data } = await workKavaInnstance.post('/auth/refresh');
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue({
@@ -133,7 +132,7 @@ export const updateUser = createAsyncThunk(
   'auth/updateUser',
   async (userData, thunkAPI) => {
     try {
-      const { data } = await workKavaInnstance.patch('/auth', userData);
+      const { data } = await workKavaInnstance.patch('/users', userData);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue({
@@ -150,7 +149,6 @@ export const updateAvatar = createAsyncThunk(
     try {
       const formData = new FormData();
       formData.append('avatarURL', avatarFile);
-
       const { data } = await workKavaInnstance.patch('/auth/avatars', formData);
       return data.avatarURL;
     } catch (error) {
