@@ -10,11 +10,11 @@ import { FormBlock } from './FormBlock/FormBlock';
 import { createData, newInit, validateFormData } from 'services/addForm';
 import { FormBlockFile } from './FormBlockFile/FormBlockFile';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCoffeeClassic } from 'store/coffeeclassic/operations';
 import { Loader } from 'Components/Global/Loader/Loader';
 import { useProductState } from 'hooks/useProductState';
 import { lang } from 'lang/lang';
 import { selectUser } from 'store/auth/selectors';
+import { POST_OPERATION } from 'utils/GlobalUtils';
 
 export const AddForm = () => {
   const { local } = useSelector(selectUser);
@@ -22,10 +22,13 @@ export const AddForm = () => {
 
   const location = useLocation();
   const props = useRef(location?.state?.props);
+  const pathname = props?.current?.pathname;
 
-  const data = createData(props?.current?.pathname);
+  const data = createData(pathname);
 
-  const { isLoading } = useProductState(props?.current?.pathname);
+  const { isLoading } = useProductState(pathname);
+
+  const { operation } = useProductState(pathname, POST_OPERATION);
 
   const index = props?.current?.index;
 
@@ -49,7 +52,8 @@ export const AddForm = () => {
     e.preventDefault();
     const isValidValues = validateFormData(state);
     if (isValidValues) {
-      dispatch(addCoffeeClassic({ ...state, index: index }));
+      dispatch(operation({ ...state, index: index }));
+      e.reset();
     } else alert('Not all fields are filled in');
   };
 

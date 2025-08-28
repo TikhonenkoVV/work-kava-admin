@@ -16,7 +16,7 @@ import {
   FLAG_UK_URL,
   LOCAL_DE,
   LOCAL_EN,
-  PUTCH_OPERATION
+  PATCH_OPERATION
 } from 'utils/GlobalUtils';
 import { useModal } from 'hooks/useModal';
 import { useClickOutsideModal } from 'hooks/useClickOutsideModal';
@@ -26,7 +26,7 @@ import { Loader } from 'Components/Global/Loader/Loader';
 
 export const ModalNav = ({ action }) => {
   const { local } = useSelector(selectUser);
-  const { isLoading, operation } = useProductState(null, PUTCH_OPERATION);
+  const { isLoading, operation } = useProductState(null, PATCH_OPERATION);
   const dispatch = useDispatch();
 
   const langMenuRef = useRef(null);

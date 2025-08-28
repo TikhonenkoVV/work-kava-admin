@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getRolls } from './operations';
+import { addRoll, getRolls } from './operations';
 
 const initialState = {
   rolls: [],
@@ -22,6 +22,19 @@ const rollsSlice = createSlice({
         state.error = null;
       })
       .addCase(getRolls.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(addRoll.pending, (state, { payload }) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(addRoll.fulfilled, (state, { payload }) => {
+        state.rolls.push(payload.rolls);
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(addRoll.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       });

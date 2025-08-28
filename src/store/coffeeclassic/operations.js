@@ -1,29 +1,29 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { workKavaInnstance } from 'store/auth/operations';
 
-export const addImages = createAsyncThunk(
-  'coffeeclassics/addimages',
-  async (imageFiles, thunkAPI) => {
-    try {
-      const keys = Object.keys(imageFiles);
-      const formData = new FormData();
-      keys.forEach(el => {
-        formData.append(el, imageFiles[el]);
-      });
+// export const addCoffeeClassicImages = createAsyncThunk(
+//   'coffeeclassics/addimages',
+//   async (imageFiles, thunkAPI) => {
+//     try {
+//       const keys = Object.keys(imageFiles);
+//       const formData = new FormData();
+//       keys.forEach(el => {
+//         formData.append(el, imageFiles[el]);
+//       });
 
-      const { images: data } = await workKavaInnstance.post(
-        '/coffeeclassics/images',
-        formData
-      );
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue({
-        message: error.response.data.message,
-        status: error.response.status
-      });
-    }
-  }
-);
+//       const { images: data } = await workKavaInnstance.post(
+//         '/coffeeclassics/images',
+//         formData
+//       );
+//       return data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue({
+//         message: error.response.data.message,
+//         status: error.response.status
+//       });
+//     }
+//   }
+// );
 
 export const getCoffeeClassics = createAsyncThunk(
   'coffeeclassics/get',
@@ -56,8 +56,6 @@ export const addCoffeeClassic = createAsyncThunk(
       keys.forEach(el => {
         formData.append(el, imageData[el]);
       });
-      console.log(formData);
-
       const { data: images } = await workKavaInnstance.post(
         '/coffeeclassics/images',
         formData

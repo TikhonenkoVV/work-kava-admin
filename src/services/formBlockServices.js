@@ -16,17 +16,19 @@ const symbol = s => {
 };
 
 export const text = (e, title) => {
-  const spiitedString = e.split('_');
-  const local = spiitedString[spiitedString.length - 1];
-  if (title === 'Price') {
-    if (spiitedString.length === 3) {
-      return `${local.toUpperCase()} (${toCapitalize(
-        e.split('_')[1]
-      )}) (${symbol(currency(local))})`;
+  const splitedString = e.split('_');
+  const local = splitedString[splitedString.length - 1];
+  if (title === 'Price' || title === 'Preis' || title === 'Ціна') {
+    if (splitedString.length === 3) {
+      return `${local.toUpperCase()} ${toCapitalize(e.split('_')[1])} (${symbol(
+        currency(local)
+      )})`;
     } else {
       return `${local.toUpperCase()} (${symbol(currency(local))})`;
     }
   } else {
-    return local.toUpperCase();
+    if (splitedString.length > 1) {
+      return local.toUpperCase();
+    } else return toCapitalize(splitedString[0]);
   }
 };

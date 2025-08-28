@@ -10,7 +10,7 @@ export const FormBlock = ({ data, title, onChange }) => {
         <StyledLabel key={el}>
           <Caption>{text(el, title)}</Caption>
           {data[0] === 'ingredients_en' ? (
-            <StyledTextarea onChange={onChange} />
+            <StyledTextarea name={el} onChange={onChange} />
           ) : (
             <StyledInput
               type="text"

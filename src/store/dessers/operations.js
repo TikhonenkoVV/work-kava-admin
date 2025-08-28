@@ -12,3 +12,31 @@ export const getDesserts = createAsyncThunk(
     }
   }
 );
+
+export const addDessert = createAsyncThunk(
+  'desserts/create',
+  async (credentials, thunkAPI) => {
+    try {
+      const { data } = await workKavaInnstance.post('/desserts', credentials);
+
+      const id = data.dessert._id;
+
+      const { img, webpImg } = credentials;
+      const imageData = { img, webpImg };
+      const keys = Object.keys(imageData);
+      const formData = new FormData();
+      formData.set('id', id);
+      keys.forEach(el => {
+        formData.append(el, imageData[el]);
+      });
+      const { data: images } = await workKavaInnstance.post(
+        '/desserts/images',
+        formData
+      );
+
+      return { ...data, ...images };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

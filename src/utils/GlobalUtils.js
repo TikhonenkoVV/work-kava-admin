@@ -27,5 +27,5 @@ export const HOT_DOGS_PATH = '/hot-dogs';
 
 export const GET_OPERATION = 'get';
 export const POST_OPERATION = 'post';
-export const PUTCH_OPERATION = 'putch';
+export const PATCH_OPERATION = 'putch';
 export const DELETE_OPERATION = 'delete';

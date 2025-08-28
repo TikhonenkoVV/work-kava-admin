@@ -35,7 +35,7 @@ const Home = () => {
         {pathname === ADD_PRODUCT_PATH ? (
           <AddForm />
         ) : (
-          <ProductList data={collection} title={title} />
+          collection && <ProductList data={collection} title={title} />
         )}
       </Container>
     </StyledHomeSection>

@@ -12,3 +12,31 @@ export const getBurgers = createAsyncThunk(
     }
   }
 );
+
+export const addBurger = createAsyncThunk(
+  'burgers/create',
+  async (credentials, thunkAPI) => {
+    try {
+      const { data } = await workKavaInnstance.post('/burgers', credentials);
+
+      const id = data.burger._id;
+
+      const { img, webpImg } = credentials;
+      const imageData = { img, webpImg };
+      const keys = Object.keys(imageData);
+      const formData = new FormData();
+      formData.set('id', id);
+      keys.forEach(el => {
+        formData.append(el, imageData[el]);
+      });
+      const { data: images } = await workKavaInnstance.post(
+        '/burgers/images',
+        formData
+      );
+
+      return { ...data, ...images };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

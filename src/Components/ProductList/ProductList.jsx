@@ -27,33 +27,40 @@ export const ProductList = ({ data, title }) => {
         <SvgIcon w={24} h={24} icon={'add'} />
       </CardButton>
       <CollectionTitle>{title}</CollectionTitle>
-      <ul>
-        {data?.map((el, i) => (
-          <StyledLi key={el._id}>
-            <StyledImage src={el.imgURL} alt={el.title_en} color={colors[i]} />
-            <CardContainer>
-              <CardTitle>
-                {local === LOCAL_EN
-                  ? el.title_en
-                  : local === LOCAL_DE
-                  ? el.title_de
-                  : el.title_ua}
-              </CardTitle>
-              <CardButtonContainer>
-                <CardButton>
-                  <SvgIcon w={24} h={24} icon={'edit'} />
-                </CardButton>
-                <CardButton>
-                  <SvgIcon w={24} h={24} icon={'archive'} />
-                </CardButton>
-                <CardButton>
-                  <SvgIcon w={24} h={24} icon={'delete'} />
-                </CardButton>
-              </CardButtonContainer>
-            </CardContainer>
-          </StyledLi>
-        ))}
-      </ul>
+      {data.length > 0 && (
+        <ul>
+          {data?.map((el, i) => (
+            <StyledLi key={el._id}>
+              <StyledImage
+                width={120}
+                src={el.imgURL}
+                alt={el.title_en}
+                color={colors[i]}
+              />
+              <CardContainer>
+                <CardTitle>
+                  {local === LOCAL_EN
+                    ? el.title_en
+                    : local === LOCAL_DE
+                    ? el.title_de
+                    : el.title_ua}
+                </CardTitle>
+                <CardButtonContainer>
+                  <CardButton>
+                    <SvgIcon w={24} h={24} icon={'edit'} />
+                  </CardButton>
+                  <CardButton>
+                    <SvgIcon w={24} h={24} icon={'archive'} />
+                  </CardButton>
+                  <CardButton>
+                    <SvgIcon w={24} h={24} icon={'delete'} />
+                  </CardButton>
+                </CardButtonContainer>
+              </CardContainer>
+            </StyledLi>
+          ))}
+        </ul>
+      )}
     </>
   );
 };
