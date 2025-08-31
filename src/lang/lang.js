@@ -13,7 +13,9 @@ export const lang = {
     imagesTitle: 'Images',
     selectFile: 'Select file',
     submit: 'Submit',
-    addNewProduct: 'Add new product'
+    addNewProduct: 'Add new product',
+    baсkToProduktList: 'Back to product list',
+    selectAnAction: 'Select an action'
   },
   'de-DE': {
     coffeeClassicTitle: 'Schwarzer Kaffee',
@@ -29,7 +31,9 @@ export const lang = {
     imagesTitle: 'Bilder',
     selectFile: 'Datei auswählen',
     submit: 'Absenden',
-    addNewProduct: 'Neues Produkt hinzufügen'
+    addNewProduct: 'Neues Produkt hinzufügen',
+    baсkToProduktList: 'Zurück zur Produktliste',
+    selectAnAction: 'Wählen Sie eine Aktion aus'
   },
   'uk-UA': {
     coffeeClassicTitle: 'Класична кава',
@@ -45,6 +49,8 @@ export const lang = {
     imagesTitle: 'Зображення',
     selectFile: 'Обрати файл',
     submit: 'Підтвердити',
-    addNewProduct: 'Додати новий продукт'
+    addNewProduct: 'Додати новий продукт',
+    baсkToProduktList: 'До списку продуктів',
+    selectAnAction: 'Оберіть дію'
   }
 };

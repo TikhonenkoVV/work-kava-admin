@@ -30,7 +30,7 @@ const burgersSlice = createSlice({
         state.error = null;
       })
       .addCase(addBurger.fulfilled, (state, { payload }) => {
-        state.burgers.push(payload.burgers);
+        state.burgers.push(payload.updated);
         state.isLoading = false;
         state.error = null;
       })

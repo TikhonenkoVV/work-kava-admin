@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 export const StyledHomeSection = styled.section`
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 24px;
+  padding-bottom: 24px;
 `;
 
 export const Container = styled.div`
@@ -16,6 +16,7 @@ export const Container = styled.div`
 `;
 
 export const BlockTitle = styled.h2`
+  font-size: 18px;
   margin-bottom: 10px;
 `;
 
@@ -33,4 +34,18 @@ export const Caption = styled.span`
   display: flex;
   align-items: center;
   height: 32px;
+`;
+
+export const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 32px;
+  border: 1px solid ${({ theme }) => theme.colors.primaryText};
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.buttonsBackground};
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
 `;

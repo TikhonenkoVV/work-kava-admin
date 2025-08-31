@@ -41,9 +41,12 @@ export const SetBtn = styled.button`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  overflow: hidden;
 `;
 
 export const UserBtn = styled(SetBtn)`
+  border: 2px solid ${props => props.theme.colors.white};
+  border-radius: 4px;
   transition: fill ${({ theme }) => theme.baseTransition},
     color ${({ theme }) => theme.baseTransition};
   &:hover {
@@ -63,13 +66,10 @@ export const LangBtn = styled(SetBtn)`
     width: 40px;
     height: 40px;
     border: 2px solid ${props => props.theme.colors.white};
-    border-radius: 10px;
-    transition: border-color ${props => props.theme.baseTransition};
+    border-radius: 4px;
+    /* border-radius: 4px; */
   }
   & span {
     pointer-events: none;
-  }
-  &:hover img {
-    border-color: ${props => props.theme.colors.whiteButtonHover};
   }
 `;

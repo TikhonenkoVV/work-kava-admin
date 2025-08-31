@@ -81,7 +81,7 @@ export const ModalNav = ({ action }) => {
           />
         </LangBtn>
         <UserBtn type="button">
-          <SvgIcon w={40} h={40} icon={'avatar'} aria-label="icon user" />
+          <SvgIcon w={36} h={36} icon={'avatar'} aria-label="icon user" />
         </UserBtn>
       </SetButtonWrapper>
     </BackdropHeader>

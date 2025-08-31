@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import {
+  AddCardButton,
   CardButton,
   CardButtonContainer,
   CardContainer,
@@ -13,26 +14,43 @@ import { useLocation } from 'react-router-dom';
 import { colors, getMaxIndex } from 'services/productList';
 import { ADD_PRODUCT_PATH, LOCAL_DE, LOCAL_EN } from 'utils/GlobalUtils';
 import { selectUser } from 'store/auth/selectors';
+import { useProductState } from 'hooks/useProductState';
+import { Loader } from 'Components/Global/Loader/Loader';
+import { useWindowWidth } from 'hooks/useWindowWidth';
+import { lang } from 'lang/lang';
 
 export const ProductList = ({ data, title }) => {
+  const { windowWidth } = useWindowWidth();
+
   const { local } = useSelector(selectUser);
 
   const { pathname } = useLocation();
+
+  const { isLoading } = useProductState(pathname);
 
   const index = getMaxIndex(data) + 1;
 
   return (
     <>
-      <CardButton to={ADD_PRODUCT_PATH} state={{ props: { pathname, index } }}>
-        <SvgIcon w={24} h={24} icon={'add'} />
-      </CardButton>
+      {isLoading && <Loader />}
       <CollectionTitle>{title}</CollectionTitle>
+      <AddCardButton
+        to={ADD_PRODUCT_PATH}
+        state={{ props: { pathname, index } }}
+      >
+        <SvgIcon
+          w={windowWidth > 413 ? 20 : 14}
+          h={windowWidth > 413 ? 20 : 14}
+          icon={'add'}
+        />
+        <span>{lang[local].addNewProduct}</span>
+      </AddCardButton>
       {data.length > 0 && (
         <ul>
           {data?.map((el, i) => (
             <StyledLi key={el._id}>
               <StyledImage
-                width={120}
+                width={windowWidth > 413 ? 120 : 100}
                 src={el.imgURL}
                 alt={el.title_en}
                 color={colors[i]}
@@ -47,13 +65,25 @@ export const ProductList = ({ data, title }) => {
                 </CardTitle>
                 <CardButtonContainer>
                   <CardButton>
-                    <SvgIcon w={24} h={24} icon={'edit'} />
+                    <SvgIcon
+                      w={windowWidth > 413 ? 24 : 18}
+                      h={windowWidth > 413 ? 24 : 18}
+                      icon={'edit'}
+                    />
                   </CardButton>
                   <CardButton>
-                    <SvgIcon w={24} h={24} icon={'archive'} />
+                    <SvgIcon
+                      w={windowWidth > 413 ? 24 : 18}
+                      h={windowWidth > 413 ? 24 : 18}
+                      icon={'archive'}
+                    />
                   </CardButton>
                   <CardButton>
-                    <SvgIcon w={24} h={24} icon={'delete'} />
+                    <SvgIcon
+                      w={windowWidth > 413 ? 24 : 18}
+                      h={windowWidth > 413 ? 24 : 18}
+                      icon={'delete'}
+                    />
                   </CardButton>
                 </CardButtonContainer>
               </CardContainer>

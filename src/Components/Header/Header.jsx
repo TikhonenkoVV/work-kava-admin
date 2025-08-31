@@ -2,10 +2,12 @@ import { SvgIcon } from 'Components/Global/SvgIcon/SvgIcon';
 import {
   BurgerMenuButton,
   ContainerStyled,
-  HeaderStyled
+  HeaderStyled,
+  SetButtonsWrapper
 } from './Header.styled';
 import { useState } from 'react';
 import { ModalNav } from './Components/ModalNav';
+import { ThemeToggler } from './Components/ThemeToggler/ThemeToggler';
 
 export const Header = () => {
   const [modalHeader, setModalHeader] = useState(false);
@@ -26,13 +28,21 @@ export const Header = () => {
     <HeaderStyled>
       <ContainerStyled>
         <SvgIcon w={150} h={32} icon={'logo'} style={{ fill: 'inherit' }} />
-        <BurgerMenuButton
-          type="button"
-          onClick={handleOpenModal}
-          aria-label="menu"
-        >
-          <SvgIcon w={32} h={32} icon={'burger'} style={{ fill: 'inherit' }} />
-        </BurgerMenuButton>
+        <SetButtonsWrapper>
+          <ThemeToggler />
+          <BurgerMenuButton
+            type="button"
+            onClick={handleOpenModal}
+            aria-label="menu"
+          >
+            <SvgIcon
+              w={32}
+              h={32}
+              icon={'burger'}
+              style={{ fill: 'inherit' }}
+            />
+          </BurgerMenuButton>
+        </SetButtonsWrapper>
       </ContainerStyled>
     </HeaderStyled>
   );

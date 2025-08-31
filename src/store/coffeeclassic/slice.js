@@ -31,7 +31,7 @@ const coffeeClassicSlice = createSlice({
         state.error = null;
       })
       .addCase(addCoffeeClassic.fulfilled, (state, { payload }) => {
-        state.coffeeClassics.push(payload.coffee_classic);
+        state.coffeeClassics.push(payload.updated);
         state.isLoading = false;
         state.error = null;
       })

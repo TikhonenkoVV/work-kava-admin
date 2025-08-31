@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import {
+  FormCaption,
   FormTitle,
   ImageWrapper,
-  StyledForm,
-  SubmitButton
+  StyledForm
 } from './AddForm.styled';
 import { useLocation } from 'react-router-dom';
 import { FormBlock } from './FormBlock/FormBlock';
@@ -15,14 +15,25 @@ import { useProductState } from 'hooks/useProductState';
 import { lang } from 'lang/lang';
 import { selectUser } from 'store/auth/selectors';
 import { POST_OPERATION } from 'utils/GlobalUtils';
+import { Modal } from 'Components/Global/Modal/Modal';
+import { AskModal } from './AskModal/AskModal';
+import { useModal } from 'hooks/useModal';
+import { getTitle } from 'services/home';
+import { StyledButton } from 'styles/components.styled';
 
 export const AddForm = () => {
   const { local } = useSelector(selectUser);
+
   const dispatch = useDispatch();
 
+  const askModalRef = useRef(null);
+  const formRef = useRef(null);
+  const refId = askModalRef?.current?.id || 'askModal';
+  const { isModalOpen, openModal, closeModal } = useModal(refId);
   const location = useLocation();
   const props = useRef(location?.state?.props);
   const pathname = props?.current?.pathname;
+  const title = getTitle(pathname, local);
 
   const data = createData(pathname);
 
@@ -48,12 +59,23 @@ export const AddForm = () => {
     setState({ ...state, [name]: newValue });
   };
 
+  const formReset = () => {
+    formRef.current.reset();
+    setImage({
+      img: null,
+      webpImg: null
+    });
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     const isValidValues = validateFormData(state);
     if (isValidValues) {
       dispatch(operation({ ...state, index: index }));
-      e.reset();
+      console.log(e);
+
+      formReset(e.current);
+      openModal();
     } else alert('Not all fields are filled in');
   };
 
@@ -73,8 +95,9 @@ export const AddForm = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <FormTitle>{lang[local].addNewProduct}</FormTitle>
-      <StyledForm onSubmit={handleSubmit}>
+      <FormTitle>{title}</FormTitle>
+      <FormCaption>{lang[local].addNewProduct}</FormCaption>
+      <StyledForm ref={formRef} onSubmit={handleSubmit}>
         <FormBlock
           data={data.title}
           title={lang[local].nameTitle}
@@ -104,8 +127,13 @@ export const AddForm = () => {
           {image?.img && <img src={image?.img} alt={'Raster'} />}
           {image?.webpImg && <img src={image?.webpImg} alt={'Webp'} />}
         </ImageWrapper>
-        <SubmitButton type="submit">{lang[local].submit}</SubmitButton>
+        <StyledButton type="submit">{lang[local].submit}</StyledButton>
       </StyledForm>
+      {isModalOpen && !isLoading && (
+        <Modal id="askModal" forwardetRef={askModalRef} onClose={closeModal}>
+          <AskModal backLink={pathname} onCloseModal={closeModal} />
+        </Modal>
+      )}
     </>
   );
 };

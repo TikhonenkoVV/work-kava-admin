@@ -4,7 +4,7 @@ import { Backdrop } from './Modal.styled.js';
 
 const modalRoot = document.querySelector('#modal-root');
 
-export const Modal = ({ onClose, children }) => {
+export const Modal = ({ onClose, children, forwardetRef, id }) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
@@ -31,7 +31,14 @@ export const Modal = ({ onClose, children }) => {
   };
 
   return createPortal(
-    <Backdrop onClick={handleBackdropClick}>{children}</Backdrop>,
+    <Backdrop
+      className="visually-hidden"
+      id={id}
+      ref={forwardetRef}
+      onClick={handleBackdropClick}
+    >
+      {children}
+    </Backdrop>,
     modalRoot
   );
 };

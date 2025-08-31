@@ -9,15 +9,17 @@ export const StyledInput = styled.input`
   color: inherit;
   caret-color: currentColor;
   border: 1px solid ${({ theme }) => theme.colors.primaryText};
-  background-color: ${({ theme }) => theme.colors.primaryBackground};
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.elementsBackground};
 `;
 
 export const StyledTextarea = styled.textarea`
   outline: unset;
+  height: 100px;
   color: inherit;
   caret-color: currentColor;
   border: 1px solid ${({ theme }) => theme.colors.primaryText};
-  background-color: ${({ theme }) => theme.colors.primaryBackground};
-  height: 100px;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.elementsBackground};
   resize: none;
 `;

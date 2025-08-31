@@ -30,7 +30,7 @@ const rollsSlice = createSlice({
         state.error = null;
       })
       .addCase(addRoll.fulfilled, (state, { payload }) => {
-        state.rolls.push(payload.rolls);
+        state.rolls.push(payload.updated);
         state.isLoading = false;
         state.error = null;
       })

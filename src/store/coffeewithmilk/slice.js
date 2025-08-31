@@ -30,7 +30,7 @@ const coffeeWithMilkSlice = createSlice({
         state.error = null;
       })
       .addCase(addCoffeeWithMilk.fulfilled, (state, { payload }) => {
-        state.coffeeWithMilks.push(payload.coffee_with_milk);
+        state.coffeeWithMilks.push(payload.updated);
         state.isLoading = false;
         state.error = null;
       })

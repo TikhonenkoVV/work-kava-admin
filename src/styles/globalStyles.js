@@ -91,6 +91,7 @@ export const GlobalStylesTmp = css`
     color: inherit;
     background-color: transparent;
     cursor: pointer;
+    box-sizing: border-box;
   }
 
   a {

@@ -2,18 +2,23 @@ import styled from '@emotion/styled';
 
 export const FormTitle = styled.h1`
   margin-bottom: 16px;
+  @media screen and (${({ theme }) => theme.devices.lessMobile}) {
+    font-size: 20px;
+  }
+`;
+
+export const FormCaption = styled.h2`
+  font-size: 22px;
+  margin-bottom: 16px;
+  @media screen and (${({ theme }) => theme.devices.lessMobile}) {
+    font-size: 20px;
+  }
 `;
 
 export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 16px;
-`;
-
-export const SubmitButton = styled.button`
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.primaryText};
 `;
 
 export const ImageWrapper = styled.div`

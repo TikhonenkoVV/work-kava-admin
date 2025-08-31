@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getHotDogs } from './operations';
+import { addHotDog, getHotDogs } from './operations';
 
 const initialState = {
   hotDogs: [],
@@ -22,6 +22,19 @@ const hotDogsSlice = createSlice({
         state.error = null;
       })
       .addCase(getHotDogs.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(addHotDog.pending, (state, { payload }) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(addHotDog.fulfilled, (state, { payload }) => {
+        state.hotDogs.push(payload.updated);
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(addHotDog.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       });
