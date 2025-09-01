@@ -37,3 +37,21 @@ export const addRoll = createAsyncThunk(
     }
   }
 );
+
+export const updateRoll = createAsyncThunk(
+  'rolls/updateRoll',
+  async (rollData, thunkAPI) => {
+    try {
+      const { data } = await workKavaInnstance.patch(
+        `/rolls/${rollData.id}`,
+        rollData.data
+      );
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message,
+        status: error.response.status
+      });
+    }
+  }
+);

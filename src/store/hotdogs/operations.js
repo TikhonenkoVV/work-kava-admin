@@ -40,3 +40,21 @@ export const addHotDog = createAsyncThunk(
     }
   }
 );
+
+export const updateHotDog = createAsyncThunk(
+  'hotdogs/updateHotDog',
+  async (hotDogData, thunkAPI) => {
+    try {
+      const { data } = await workKavaInnstance.patch(
+        `/hotdogs/${hotDogData.id}`,
+        hotDogData.data
+      );
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message,
+        status: error.response.status
+      });
+    }
+  }
+);

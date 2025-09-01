@@ -45,7 +45,4 @@ export const StyledButton = styled.button`
   border: 1px solid ${({ theme }) => theme.colors.primaryText};
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.buttonsBackground};
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
 `;

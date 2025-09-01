@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addRoll, getRolls } from './operations';
+import { addRoll, getRolls, updateRoll } from './operations';
 
 const initialState = {
   rolls: [],
@@ -35,6 +35,22 @@ const rollsSlice = createSlice({
         state.error = null;
       })
       .addCase(addRoll.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(updateRoll.pending, (state, { payload }) => {
+        state.isLoading = true;
+        state.error = payload;
+      })
+      .addCase(updateRoll.fulfilled, (state, { payload }) => {
+        const index = state.rolls.findIndex(
+          roll => roll._id === payload.updated._id
+        );
+        state.rolls[index] = payload.updated;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(updateRoll.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       });

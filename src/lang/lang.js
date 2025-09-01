@@ -15,7 +15,10 @@ export const lang = {
     submit: 'Submit',
     addNewProduct: 'Add new product',
     baсkToProduktList: 'Back to product list',
-    selectAnAction: 'Select an action'
+    selectAnAction: 'Select an action',
+    allCards: 'All cards',
+    onlyActiveCards: 'Only active cards',
+    onlyArchivedCards: 'Only archived sards'
   },
   'de-DE': {
     coffeeClassicTitle: 'Schwarzer Kaffee',
@@ -33,7 +36,10 @@ export const lang = {
     submit: 'Absenden',
     addNewProduct: 'Neues Produkt hinzufügen',
     baсkToProduktList: 'Zurück zur Produktliste',
-    selectAnAction: 'Wählen Sie eine Aktion aus'
+    selectAnAction: 'Wählen Sie eine Aktion aus',
+    allCards: 'Alle Karten',
+    onlyActiveCards: 'Nur aktive Karten',
+    onlyArchivedCards: 'Nur archivierte Karten'
   },
   'uk-UA': {
     coffeeClassicTitle: 'Класична кава',
@@ -51,6 +57,9 @@ export const lang = {
     submit: 'Підтвердити',
     addNewProduct: 'Додати новий продукт',
     baсkToProduktList: 'До списку продуктів',
-    selectAnAction: 'Оберіть дію'
+    selectAnAction: 'Оберіть дію',
+    allCards: 'Всі картки',
+    onlyActiveCards: 'Тільки активні картки',
+    onlyArchivedCards: 'Тільки архівні картки'
   }
 };

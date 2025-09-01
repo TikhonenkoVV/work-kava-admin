@@ -67,3 +67,21 @@ export const addCoffeeClassic = createAsyncThunk(
     }
   }
 );
+
+export const updateCoffeeClassic = createAsyncThunk(
+  'coffeeclassics/updateCoffeeClassic',
+  async (coffeeClassicData, thunkAPI) => {
+    try {
+      const { data } = await workKavaInnstance.patch(
+        `/coffeeclassics/${coffeeClassicData.id}`,
+        coffeeClassicData.data
+      );
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message,
+        status: error.response.status
+      });
+    }
+  }
+);

@@ -43,3 +43,21 @@ export const addCoffeeWithMilk = createAsyncThunk(
     }
   }
 );
+
+export const updateCoffeeWithMilk = createAsyncThunk(
+  'coffeewithmilks/updateCoffeeWithMilk',
+  async (coffeeWithMilkData, thunkAPI) => {
+    try {
+      const { data } = await workKavaInnstance.patch(
+        `/coffeewithmilks/${coffeeWithMilkData.id}`,
+        coffeeWithMilkData.data
+      );
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message,
+        status: error.response.status
+      });
+    }
+  }
+);

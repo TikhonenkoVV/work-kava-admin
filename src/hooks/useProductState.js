@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux';
 import { updateUser } from 'store/auth/operations';
 import { selectIsRefreshing } from 'store/auth/selectors';
-import { addBurger, getBurgers } from 'store/burgers/operations';
+import { addBurger, getBurgers, updateBurger } from 'store/burgers/operations';
 import { selectBurgers, selectIsLoadingBurgrs } from 'store/burgers/selectors';
 import {
   addCoffeeClassic,
-  getCoffeeClassics
+  getCoffeeClassics,
+  updateCoffeeClassic
 } from 'store/coffeeclassic/operations';
 import {
   selectCoffeeClassic,
@@ -13,20 +14,25 @@ import {
 } from 'store/coffeeclassic/selectors';
 import {
   addCoffeeWithMilk,
-  getCoffeeWithMilks
+  getCoffeeWithMilks,
+  updateCoffeeWithMilk
 } from 'store/coffeewithmilk/operations';
 import {
   selectCoffeeWithMilk,
   selectIsLoadingCoffeeWithMilk
 } from 'store/coffeewithmilk/selectors';
-import { addDessert, getDesserts } from 'store/dessers/operations';
+import {
+  addDessert,
+  getDesserts,
+  updateDessert
+} from 'store/dessers/operations';
 import {
   selectDesserts,
   selectIsLoadingDesserts
 } from 'store/dessers/selectors';
 import { addHotDog, getHotDogs } from 'store/hotdogs/operations';
 import { selectHotDogs, selectIsLoadingHotDogs } from 'store/hotdogs/selektors';
-import { addRoll, getRolls } from 'store/rolls/operations';
+import { addRoll, getRolls, updateRoll } from 'store/rolls/operations';
 import { selectIsLoadingRolls, selectRolls } from 'store/rolls/selectors';
 import {
   BURGERS_PATH,
@@ -69,6 +75,9 @@ export const useProductState = (path, method) => {
     if (method === POST_OPERATION) {
       operation = addCoffeeClassic;
     }
+    if (method === PATCH_OPERATION) {
+      operation = updateCoffeeClassic;
+    }
   }
   if (path === COFFE_WITH_MILK_PATH) {
     isLoading = isLoadingCoffeeWithMilk;
@@ -78,6 +87,9 @@ export const useProductState = (path, method) => {
     }
     if (method === POST_OPERATION) {
       operation = addCoffeeWithMilk;
+    }
+    if (method === PATCH_OPERATION) {
+      operation = updateCoffeeWithMilk;
     }
   }
   if (path === DESSERTS_PATH) {
@@ -89,6 +101,9 @@ export const useProductState = (path, method) => {
     if (method === POST_OPERATION) {
       operation = addDessert;
     }
+    if (method === PATCH_OPERATION) {
+      operation = updateDessert;
+    }
   }
   if (path === BURGERS_PATH) {
     isLoading = isLoadingBurgers;
@@ -99,6 +114,9 @@ export const useProductState = (path, method) => {
     if (method === POST_OPERATION) {
       operation = addBurger;
     }
+    if (method === PATCH_OPERATION) {
+      operation = updateBurger;
+    }
   }
   if (path === ROLLS_PATH) {
     isLoading = isLoadingRolls;
@@ -108,6 +126,9 @@ export const useProductState = (path, method) => {
     }
     if (method === POST_OPERATION) {
       operation = addRoll;
+    }
+    if (method === PATCH_OPERATION) {
+      operation = updateRoll;
     }
   }
   if (path === HOT_DOGS_PATH) {

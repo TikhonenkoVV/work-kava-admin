@@ -40,3 +40,21 @@ export const addBurger = createAsyncThunk(
     }
   }
 );
+
+export const updateBurger = createAsyncThunk(
+  'burgers/updateBurger',
+  async (burgerData, thunkAPI) => {
+    try {
+      const { data } = await workKavaInnstance.patch(
+        `/burgers/${burgerData.id}`,
+        burgerData.data
+      );
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message,
+        status: error.response.status
+      });
+    }
+  }
+);

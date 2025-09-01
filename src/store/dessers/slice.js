@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addDessert, getDesserts } from './operations';
+import { addDessert, getDesserts, updateDessert } from './operations';
 
 const initialState = {
   desserts: [],
@@ -35,6 +35,22 @@ const dessertsSlice = createSlice({
         state.error = null;
       })
       .addCase(addDessert.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(updateDessert.pending, (state, { payload }) => {
+        state.isLoading = true;
+        state.error = payload;
+      })
+      .addCase(updateDessert.fulfilled, (state, { payload }) => {
+        const index = state.desserts.findIndex(
+          dessert => dessert._id === payload.updated._id
+        );
+        state.desserts[index] = payload.updated;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(updateDessert.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       });

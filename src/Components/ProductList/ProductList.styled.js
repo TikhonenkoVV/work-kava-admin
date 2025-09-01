@@ -1,8 +1,38 @@
 import styled from '@emotion/styled';
+import { SvgIcon } from 'Components/Global/SvgIcon/SvgIcon';
 import { Link } from 'react-router-dom';
+import { StyledButton } from 'styles/components.styled';
 
 export const CollectionTitle = styled.h1`
   margin-bottom: 16px;
+`;
+
+export const Icon = styled(SvgIcon)`
+  rotate: ${({ rotate }) => rotate};
+`;
+
+export const FilterButton = styled(StyledButton)`
+  justify-content: flex-start;
+  column-gap: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  & span {
+    margin-right: auto;
+  }
+`;
+
+export const AddCardButton = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 32px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  padding-left: 10px;
+  column-gap: 10px;
+  border: 1px solid ${({ theme }) => theme.colors.primaryText};
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.buttonsBackground};
 `;
 
 export const StyledList = styled.ul``;
@@ -44,20 +74,7 @@ export const CardTitle = styled.h2`
   }
 `;
 
-export const AddCardButton = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: 40px;
-  margin-bottom: 16px;
-  padding-left: 10px;
-  column-gap: 10px;
-  border: 2px solid ${({ theme }) => theme.colors.primaryText};
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.buttonsBackground};
-`;
-
-export const CardButton = styled(Link)`
+export const CardButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
