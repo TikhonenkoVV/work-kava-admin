@@ -17,6 +17,7 @@ import { coffeeWithMilkReducer } from './coffeewithmilk/slice';
 import { dessertsReducer } from './dessers/slice';
 import { rollsReducer } from './rolls/slice';
 import { hotDogsReducer } from './hotdogs/slice';
+import { filtersReducer } from './filter/slice';
 
 const authPersistConfig = {
   key: 'auth',
@@ -32,7 +33,8 @@ export const store = configureStore({
     desserts: dessertsReducer,
     burgers: burgersReducer,
     rolls: rollsReducer,
-    hotDogs: hotDogsReducer
+    hotDogs: hotDogsReducer,
+    filter: filtersReducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

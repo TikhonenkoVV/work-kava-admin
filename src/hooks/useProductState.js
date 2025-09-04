@@ -30,7 +30,7 @@ import {
   selectDesserts,
   selectIsLoadingDesserts
 } from 'store/dessers/selectors';
-import { addHotDog, getHotDogs } from 'store/hotdogs/operations';
+import { addHotDog, getHotDogs, updateHotDog } from 'store/hotdogs/operations';
 import { selectHotDogs, selectIsLoadingHotDogs } from 'store/hotdogs/selektors';
 import { addRoll, getRolls, updateRoll } from 'store/rolls/operations';
 import { selectIsLoadingRolls, selectRolls } from 'store/rolls/selectors';
@@ -59,12 +59,12 @@ export const useProductState = (path, method) => {
   const isLoadingHotDogs = useSelector(selectIsLoadingHotDogs);
   const isRefreshing = useSelector(selectIsRefreshing);
 
-  const { coffeeClassics } = useSelector(selectCoffeeClassic);
-  const { coffeeWithMilks } = useSelector(selectCoffeeWithMilk);
-  const { desserts } = useSelector(selectDesserts);
-  const { burgers } = useSelector(selectBurgers);
-  const { rolls } = useSelector(selectRolls);
-  const { hotDogs } = useSelector(selectHotDogs);
+  const coffeeClassics = useSelector(selectCoffeeClassic);
+  const coffeeWithMilks = useSelector(selectCoffeeWithMilk);
+  const desserts = useSelector(selectDesserts);
+  const burgers = useSelector(selectBurgers);
+  const rolls = useSelector(selectRolls);
+  const hotDogs = useSelector(selectHotDogs);
 
   if (path === COFFE_CLASSIC_PATH) {
     isLoading = isLoadingCoffeeClassic;
@@ -139,6 +139,9 @@ export const useProductState = (path, method) => {
     }
     if (method === POST_OPERATION) {
       operation = addHotDog;
+    }
+    if (method === PATCH_OPERATION) {
+      operation = updateHotDog;
     }
   }
   if (path === null) {

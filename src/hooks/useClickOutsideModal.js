@@ -1,21 +1,29 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-export const useClickOutsideModal = (ref, callback) => {
+export const useClickOutsideModal = (ref, callback, id) => {
   const count = ref.length;
+  const [refs, setRefs] = useState({});
 
   const handleClick = e => {
-    if (count === 1)
-      if (ref[0].current && !ref[0].current.contains(e.target)) {
-        callback();
-      }
-    if (count === 2)
+    if (ref.length > 0 && count === 1) {
+      setRefs({ ...refs, [id]: { ref1: ref[0] } });
       if (
-        ref[0].current &&
-        !ref[0].current.contains(e.target) &&
-        !ref[1].current.contains(e.target)
+        refs[id]?.ref1?.current &&
+        !refs[id]?.ref1?.current?.contains(e.target)
       ) {
         callback();
       }
+    }
+    if (ref.length > 0 && count === 2) {
+      setRefs({ ...refs, [id]: { ref1: ref[0], ref2: ref[1] } });
+      if (
+        refs[id]?.ref1?.current &&
+        !refs[id]?.ref1?.current?.contains(e.target) &&
+        !refs[id]?.ref2?.current?.contains(e.target)
+      ) {
+        callback();
+      }
+    }
   };
 
   useEffect(() => {

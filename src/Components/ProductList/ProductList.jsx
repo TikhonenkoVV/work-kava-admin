@@ -25,69 +25,88 @@ import { useProductState } from 'hooks/useProductState';
 import { Loader } from 'Components/Global/Loader/Loader';
 import { useWindowWidth } from 'hooks/useWindowWidth';
 import { lang } from 'lang/lang';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FilterSelect } from './Components/FilterSelect/FilterSelect';
-import { useAuth } from 'hooks/useAuth';
+import { setStatusFilter } from 'store/filter/slice';
+import { useModal } from 'hooks/useModal';
+import { useClickOutsideModal } from 'hooks/useClickOutsideModal';
 
-export const ProductList = ({ data, title }) => {
+export const ProductList = ({ data, title, checkedRadio }) => {
   const dispatch = useDispatch();
 
-  const { isLoggedIn } = useAuth();
+  const selectRef = useRef(null);
+  const filterButtontRef = useRef(null);
 
-  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
+  const { isModalOpen, closeModal, toggleModal } = useModal('selectFilter');
 
-  const { windowWidth } = useWindowWidth();
+  useClickOutsideModal(
+    [selectRef, filterButtontRef],
+    closeModal,
+    'selectFilter'
+  );
+
+  const windowWidth = useWindowWidth();
 
   const { local } = useSelector(selectUser);
 
   const { pathname } = useLocation();
 
-  const [method, setMethod] = useState(PATCH_OPERATION);
+  const { isLoading, operation } = useProductState(pathname, PATCH_OPERATION);
 
-  const { isLoading, operation } = useProductState(pathname, method);
+  const [filteredData, setFilteredData] = useState();
 
-  const [filterCaption, setFilterCaption] = useState();
+  const [filterCaption, setFilterCaption] = useState(null);
 
-  useState(() => {
-    if (isLoggedIn) setFilterCaption(lang[local].onlyActiveCards);
-  });
   const index = getMaxIndex(data) + 1;
 
+  useEffect(() => {
+    setFilterCaption(lang[local].onlyActiveCards);
+    setStatusFilter('active');
+    setFilteredData(data.filter(el => el.archived === false));
+  }, [data, local]);
+
   const handleArchiveProduct = ({ id, archived }) => {
-    setMethod(PATCH_OPERATION);
     dispatch(operation({ id, data: { archived: !archived } }));
   };
 
   const handleDeleteProduct = () => {};
 
-  const handleFilterButtonClick = () => {
-    setIsFilterMenuOpen(!isFilterMenuOpen);
-  };
-
   const handleRadioChange = id => {
-    if (id === 'active') setFilterCaption(lang[local].onlyActiveCards);
-    if (id === 'archive') setFilterCaption(lang[local].onlyArchivedCards);
-    if (id === 'all') setFilterCaption(lang[local].allCards);
+    if (id === 'active') {
+      setFilterCaption(lang[local].onlyActiveCards);
+      setFilteredData(data.filter(el => el.archived === false));
+    }
+    if (id === 'archive') {
+      setFilterCaption(lang[local].onlyArchivedCards);
+      setFilteredData(data.filter(el => el.archived === true));
+    }
+    if (id === 'all') {
+      setFilterCaption(lang[local].allCards);
+      setFilteredData(data);
+    }
   };
 
   return (
     <>
       {isLoading && <Loader />}
       <CollectionTitle>{title}</CollectionTitle>
-      <FilterButton onClick={handleFilterButtonClick} type="button">
+      <FilterButton onClick={toggleModal} type="button" ref={filterButtontRef}>
         <SvgIcon w={16} h={16} icon={'filter'} />
-        <span>{filterCaption}</span>
+        <span>{filterCaption || lang[local].onlyActiveCards}</span>
         <Icon
           w={12}
           h={12}
           icon={'arrow'}
-          rotate={isFilterMenuOpen ? '180deg' : 0}
+          rotate={isModalOpen ? '180deg' : 0}
         />
       </FilterButton>
       <FilterSelect
-        className={isFilterMenuOpen ? null : 'visually-hidden'}
+        className={isModalOpen ? null : 'visually-hidden'}
         onChange={handleRadioChange}
-        onToggle={handleFilterButtonClick}
+        onToggle={toggleModal}
+        local={local}
+        checkedRadio={checkedRadio}
+        forwardedRef={selectRef}
       />
       <AddCardButton
         to={ADD_PRODUCT_PATH}
@@ -100,9 +119,9 @@ export const ProductList = ({ data, title }) => {
         />
         <span>{lang[local].addNewProduct}</span>
       </AddCardButton>
-      {data.length > 0 && (
+      {filteredData?.length > 0 && (
         <ul>
-          {data?.map((el, i) => (
+          {filteredData?.map((el, i) => (
             <StyledLi key={el._id}>
               <StyledImage
                 width={windowWidth > 413 ? 120 : 100}

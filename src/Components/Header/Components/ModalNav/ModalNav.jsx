@@ -5,8 +5,8 @@ import {
   SetButtonWrapper,
   UserBtn
 } from './ModalNav.styled';
-import { Navigation } from './Navigation';
-import { useEffect, useRef, useState } from 'react';
+import { Navigation } from '../Navigation/Navigation';
+import { useEffect, useRef } from 'react';
 import { SvgIcon } from 'Components/Global/SvgIcon/SvgIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from 'store/auth/selectors';
@@ -20,7 +20,7 @@ import {
 } from 'utils/GlobalUtils';
 import { useModal } from 'hooks/useModal';
 import { useClickOutsideModal } from 'hooks/useClickOutsideModal';
-import { LangMenu } from './LangMenu';
+import { LangMenu } from '../LangMenu/LangMenu';
 import { useProductState } from 'hooks/useProductState';
 import { Loader } from 'Components/Global/Loader/Loader';
 
@@ -31,15 +31,10 @@ export const ModalNav = ({ action }) => {
 
   const langMenuRef = useRef(null);
   const langButtonRef = useRef(null);
-  const [refId, setRefId] = useState(null);
 
-  useEffect(() => {
-    setRefId(langMenuRef.current.id);
-  }, []);
+  const { isModalOpen, closeModal, toggleModal } = useModal('langMenu');
 
-  const { isModalOpen, closeModal, toggleModal } = useModal(refId);
-
-  useClickOutsideModal([langMenuRef, langButtonRef], closeModal);
+  useClickOutsideModal([langMenuRef, langButtonRef], closeModal, 'langMenu');
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';

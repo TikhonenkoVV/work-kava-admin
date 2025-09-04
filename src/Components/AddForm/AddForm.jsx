@@ -6,9 +6,9 @@ import {
   StyledForm
 } from './AddForm.styled';
 import { useLocation } from 'react-router-dom';
-import { FormBlock } from './FormBlock/FormBlock';
+import { FormBlock } from './Components/FormBlock/FormBlock';
 import { createData, newInit, validateFormData } from 'services/addForm';
-import { FormBlockFile } from './FormBlockFile/FormBlockFile';
+import { FormBlockFile } from './Components/FormBlockFile/FormBlockFile';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from 'Components/Global/Loader/Loader';
 import { useProductState } from 'hooks/useProductState';
@@ -16,7 +16,7 @@ import { lang } from 'lang/lang';
 import { selectUser } from 'store/auth/selectors';
 import { POST_OPERATION } from 'utils/GlobalUtils';
 import { Modal } from 'Components/Global/Modal/Modal';
-import { AskModal } from './AskModal/AskModal';
+import { AskModal } from './Components/AskModal/AskModal';
 import { useModal } from 'hooks/useModal';
 import { getTitle } from 'services/home';
 import { StyledButton } from 'styles/components.styled';

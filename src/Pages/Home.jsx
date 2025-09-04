@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getTitle } from 'services/home';
 import { selectUser } from 'store/auth/selectors';
+import { setStatusFilter } from 'store/filter/slice';
 import { Container, StyledHomeSection } from 'styles/components.styled';
 import { ADD_PRODUCT_PATH, GET_OPERATION } from 'utils/GlobalUtils';
 
@@ -24,6 +25,7 @@ const Home = () => {
   useEffect(() => {
     if (isLoggedIn) {
       if (operation) {
+        dispatch(setStatusFilter('active'));
         dispatch(operation());
       }
     }

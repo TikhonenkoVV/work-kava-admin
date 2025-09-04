@@ -6,7 +6,7 @@ import {
   SetButtonsWrapper
 } from './Header.styled';
 import { useState } from 'react';
-import { ModalNav } from './Components/ModalNav';
+import { ModalNav } from './Components/ModalNav/ModalNav';
 import { ThemeToggler } from './Components/ThemeToggler/ThemeToggler';
 
 export const Header = () => {
