@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 export const StyledHomeSection = styled.section`
   padding-top: 24px;
@@ -37,6 +38,17 @@ export const Caption = styled.span`
 `;
 
 export const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 32px;
+  border: 1px solid ${({ theme }) => theme.colors.primaryText};
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.buttonsBackground};
+`;
+
+export const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;

@@ -11,7 +11,7 @@ export const useClickOutsideModal = (ref, callback, id) => {
         refs[id]?.ref1?.current &&
         !refs[id]?.ref1?.current?.contains(e.target)
       ) {
-        callback();
+        callback(id);
       }
     }
     if (ref.length > 0 && count === 2) {
@@ -21,7 +21,7 @@ export const useClickOutsideModal = (ref, callback, id) => {
         !refs[id]?.ref1?.current?.contains(e.target) &&
         !refs[id]?.ref2?.current?.contains(e.target)
       ) {
-        callback();
+        callback(id);
       }
     }
   };

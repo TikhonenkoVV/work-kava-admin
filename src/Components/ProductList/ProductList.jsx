@@ -30,20 +30,22 @@ import { FilterSelect } from './Components/FilterSelect/FilterSelect';
 import { setStatusFilter } from 'store/filter/slice';
 import { useModal } from 'hooks/useModal';
 import { useClickOutsideModal } from 'hooks/useClickOutsideModal';
+import { Modal } from 'Components/Global/Modal/Modal';
+import { AskModal } from 'Components/Global/AskModal/AskModal';
 
 export const ProductList = ({ data, title, checkedRadio }) => {
   const dispatch = useDispatch();
 
+  const [modalId, setModalId] = useState();
+
+  const [cardData, setCardData] = useState();
+
   const selectRef = useRef(null);
   const filterButtontRef = useRef(null);
 
-  const { isModalOpen, closeModal, toggleModal } = useModal('selectFilter');
+  const { isModalOpen, openModal, closeModal, toggleModal } = useModal(modalId);
 
-  useClickOutsideModal(
-    [selectRef, filterButtontRef],
-    closeModal,
-    'selectFilter'
-  );
+  useClickOutsideModal([selectRef, filterButtontRef], closeModal, modalId);
 
   const windowWidth = useWindowWidth();
 
@@ -65,7 +67,13 @@ export const ProductList = ({ data, title, checkedRadio }) => {
     setFilteredData(data.filter(el => el.archived === false));
   }, [data, local]);
 
-  const handleArchiveProduct = ({ id, archived }) => {
+  const openAskModalArhive = data => {
+    setCardData(data);
+    setModalId('askModal');
+    openModal('askModal');
+  };
+
+  const handleActionArchive = ({ id, archived }) => {
     dispatch(operation({ id, data: { archived: !archived } }));
   };
 
@@ -86,24 +94,29 @@ export const ProductList = ({ data, title, checkedRadio }) => {
     }
   };
 
+  const onTogle = () => {
+    setModalId('selectFilter');
+    toggleModal('selectFilter');
+  };
+
   return (
     <>
       {isLoading && <Loader />}
       <CollectionTitle>{title}</CollectionTitle>
-      <FilterButton onClick={toggleModal} type="button" ref={filterButtontRef}>
+      <FilterButton onClick={onTogle} type="button" ref={filterButtontRef}>
         <SvgIcon w={16} h={16} icon={'filter'} />
         <span>{filterCaption || lang[local].onlyActiveCards}</span>
         <Icon
           w={12}
           h={12}
           icon={'arrow'}
-          rotate={isModalOpen ? '180deg' : 0}
+          rotate={isModalOpen?.selectFilter ? '180deg' : 0}
         />
       </FilterButton>
       <FilterSelect
-        className={isModalOpen ? null : 'visually-hidden'}
+        className={isModalOpen?.selectFilter ? null : 'visually-hidden'}
         onChange={handleRadioChange}
-        onToggle={toggleModal}
+        onToggle={onTogle}
         local={local}
         checkedRadio={checkedRadio}
         forwardedRef={selectRef}
@@ -147,10 +160,7 @@ export const ProductList = ({ data, title, checkedRadio }) => {
                   </CardButton>
                   <CardButton
                     onClick={() =>
-                      handleArchiveProduct({
-                        id: el._id,
-                        archived: el.archived
-                      })
+                      openAskModalArhive({ id: el._id, archived: el.archived })
                     }
                   >
                     <SvgIcon
@@ -171,6 +181,19 @@ export const ProductList = ({ data, title, checkedRadio }) => {
             </StyledLi>
           ))}
         </ul>
+      )}
+      {isModalOpen?.askModal && (
+        <Modal onClose={closeModal}>
+          <AskModal
+            action={handleActionArchive}
+            onCloseModal={closeModal}
+            data={cardData}
+            names={{
+              cancel: lang[local].cancel,
+              action: lang[local].archive
+            }}
+          />
+        </Modal>
       )}
     </>
   );

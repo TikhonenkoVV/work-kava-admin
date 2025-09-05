@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import {
+  BackLink,
   FormCaption,
   FormTitle,
   ImageWrapper,
@@ -16,10 +17,10 @@ import { lang } from 'lang/lang';
 import { selectUser } from 'store/auth/selectors';
 import { POST_OPERATION } from 'utils/GlobalUtils';
 import { Modal } from 'Components/Global/Modal/Modal';
-import { AskModal } from './Components/AskModal/AskModal';
 import { useModal } from 'hooks/useModal';
 import { getTitle } from 'services/home';
 import { StyledButton } from 'styles/components.styled';
+import { AskModal } from 'Components/Global/AskModal/AskModal';
 
 export const AddForm = () => {
   const { local } = useSelector(selectUser);
@@ -72,10 +73,8 @@ export const AddForm = () => {
     const isValidValues = validateFormData(state);
     if (isValidValues) {
       dispatch(operation({ ...state, index: index }));
-      console.log(e);
-
       formReset(e.current);
-      openModal();
+      openModal('askModal');
     } else alert('Not all fields are filled in');
   };
 
@@ -95,6 +94,7 @@ export const AddForm = () => {
   return (
     <>
       {isLoading && <Loader />}
+      <BackLink to={pathname}>{lang[local].baсkToProduktList}</BackLink>
       <FormTitle>{title}</FormTitle>
       <FormCaption>{lang[local].addNewProduct}</FormCaption>
       <StyledForm ref={formRef} onSubmit={handleSubmit}>
@@ -129,9 +129,16 @@ export const AddForm = () => {
         </ImageWrapper>
         <StyledButton type="submit">{lang[local].submit}</StyledButton>
       </StyledForm>
-      {isModalOpen && !isLoading && (
+      {isModalOpen.askModal && !isLoading && (
         <Modal id="askModal" forwardetRef={askModalRef} onClose={closeModal}>
-          <AskModal backLink={pathname} onCloseModal={closeModal} />
+          <AskModal
+            backLink={pathname}
+            onCloseModal={closeModal}
+            names={{
+              cancel: lang[local].addNewProduct,
+              action: lang[local].baсkToProduktList
+            }}
+          />
         </Modal>
       )}
     </>

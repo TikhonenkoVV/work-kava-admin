@@ -28,7 +28,7 @@ export const Navigation = ({ action }) => {
       <List>
         {paths.map(el => (
           <Item key={el.pathname}>
-            <LinkItem to={el.pathname} onClick={action}>
+            <LinkItem to={el.pathname} onClick={() => action('mobileNav')}>
               {() => getTitle(el.pathname, local)}
             </LinkItem>
           </Item>

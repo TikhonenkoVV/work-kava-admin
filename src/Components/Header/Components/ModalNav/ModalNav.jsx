@@ -6,7 +6,7 @@ import {
   UserBtn
 } from './ModalNav.styled';
 import { Navigation } from '../Navigation/Navigation';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { SvgIcon } from 'Components/Global/SvgIcon/SvgIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from 'store/auth/selectors';
@@ -36,32 +36,33 @@ export const ModalNav = ({ action }) => {
 
   useClickOutsideModal([langMenuRef, langButtonRef], closeModal, 'langMenu');
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'visible';
-    };
-  }, []);
-
   const handleLangClick = e => {
-    closeModal();
+    closeModal('langMenu');
     dispatch(operation({ local: e.currentTarget.id }));
   };
 
   return (
     <BackdropHeader>
       {isLoading && <Loader />}
-      <CloseButton type="button" onClick={action} aria-label="close">
+      <CloseButton
+        type="button"
+        onClick={() => action('mobileNav')}
+        aria-label="close"
+      >
         <SvgIcon w={32} h={32} icon="close" />
       </CloseButton>
       <Navigation action={action} />
       <SetButtonWrapper>
         <LangMenu
-          isModalOpen={isModalOpen}
+          isModalOpen={isModalOpen.langMenu}
           forwardedRef={langMenuRef}
           handleCklick={handleLangClick}
         />
-        <LangBtn type="button" onClick={toggleModal} ref={langButtonRef}>
+        <LangBtn
+          type="button"
+          onClick={() => toggleModal('langMenu')}
+          ref={langButtonRef}
+        >
           <img
             width={40}
             height={40}

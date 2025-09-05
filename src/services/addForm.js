@@ -65,6 +65,7 @@ export const newInit = data => {
   keys.forEach(e => data[e].forEach(el => arr.push(el)));
   const res = {};
   arr.map(e => (res[e] = null));
+  res.archived = false;
   res.img = null;
   res.webpImg = null;
 

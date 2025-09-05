@@ -6,18 +6,16 @@ const modalRoot = document.querySelector('#modal-root');
 
 export const Modal = ({ onClose, children, forwardetRef, id }) => {
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'visible';
     };
   });
 
   const handleKeyDown = e => {
     if (e.code === 'Escape') {
       if (typeof onClose === 'function') {
-        onClose();
+        onClose('askModal');
       }
     }
   };
@@ -25,7 +23,7 @@ export const Modal = ({ onClose, children, forwardetRef, id }) => {
   const handleBackdropClick = e => {
     if (e.target === e.currentTarget) {
       if (typeof onClose === 'function') {
-        onClose();
+        onClose('askModal');
       }
     }
   };
@@ -33,8 +31,8 @@ export const Modal = ({ onClose, children, forwardetRef, id }) => {
   return createPortal(
     <Backdrop
       className="visually-hidden"
-      id={id}
-      ref={forwardetRef}
+      // id={id}
+      // ref={forwardetRef}
       onClick={handleBackdropClick}
     >
       {children}
