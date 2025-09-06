@@ -58,3 +58,18 @@ export const updateBurger = createAsyncThunk(
     }
   }
 );
+
+export const deleteBurger = createAsyncThunk(
+  'burgers/deleteBurger',
+  async (id, thunkAPI) => {
+    try {
+      const { data } = await workKavaInnstance.delete(`/burgers/${id}`);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message,
+        status: error.response.status
+      });
+    }
+  }
+);

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addRoll, getRolls, updateRoll } from './operations';
+import { addRoll, deleteRoll, getRolls, updateRoll } from './operations';
 
 const initialState = {
   rolls: [],
@@ -51,6 +51,21 @@ const rollsSlice = createSlice({
         state.error = null;
       })
       .addCase(updateRoll.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(deleteRoll.pending, (state, { payload }) => {
+        state.isLoading = true;
+        state.error = payload;
+      })
+      .addCase(deleteRoll.fulfilled, (state, { payload }) => {
+        state.rolls = state.rolls.filter(
+          roll => roll._id !== payload.deleted._id
+        );
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(deleteRoll.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       });

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   addCoffeeWithMilk,
+  deleteCoffeeWithMilk,
   getCoffeeWithMilks,
   updateCoffeeWithMilk
 } from './operations';
@@ -55,6 +56,21 @@ const coffeeWithMilkSlice = createSlice({
         state.error = null;
       })
       .addCase(updateCoffeeWithMilk.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(deleteCoffeeWithMilk.pending, (state, { payload }) => {
+        state.isLoading = true;
+        state.error = payload;
+      })
+      .addCase(deleteCoffeeWithMilk.fulfilled, (state, { payload }) => {
+        state.coffeeWithMilks = state.coffeeWithMilks.filter(
+          coffeeWithMilk => coffeeWithMilk._id !== payload.deleted._id
+        );
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(deleteCoffeeWithMilk.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       });

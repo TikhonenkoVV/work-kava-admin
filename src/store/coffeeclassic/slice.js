@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   addCoffeeClassic,
+  deleteCoffeeClassic,
   getCoffeeClassics,
   updateCoffeeClassic
 } from './operations';
@@ -56,6 +57,21 @@ const coffeeClassicSlice = createSlice({
         state.error = null;
       })
       .addCase(updateCoffeeClassic.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(deleteCoffeeClassic.pending, (state, { payload }) => {
+        state.isLoading = true;
+        state.error = payload;
+      })
+      .addCase(deleteCoffeeClassic.fulfilled, (state, { payload }) => {
+        state.coffeeClassics = state.coffeeClassics.filter(
+          coffeeClassic => coffeeClassic._id !== payload.deleted._id
+        );
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(deleteCoffeeClassic.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       });

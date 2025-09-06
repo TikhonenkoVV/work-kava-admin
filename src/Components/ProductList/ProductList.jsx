@@ -8,6 +8,7 @@ import {
   CollectionTitle,
   FilterButton,
   Icon,
+  ImgWrapper,
   StyledImage,
   StyledLi
 } from './ProductList.styled';
@@ -16,6 +17,7 @@ import { useLocation } from 'react-router-dom';
 import { colors, getMaxIndex } from 'services/productList';
 import {
   ADD_PRODUCT_PATH,
+  DELETE_OPERATION,
   LOCAL_DE,
   LOCAL_EN,
   PATCH_OPERATION
@@ -36,16 +38,20 @@ import { AskModal } from 'Components/Global/AskModal/AskModal';
 export const ProductList = ({ data, title, checkedRadio }) => {
   const dispatch = useDispatch();
 
-  const [modalId, setModalId] = useState();
+  const filterSelectRef = useRef(null);
+  const filterButtontRef = useRef(null);
+
+  const [method, setMethod] = useState();
 
   const [cardData, setCardData] = useState();
 
-  const selectRef = useRef(null);
-  const filterButtontRef = useRef(null);
+  const { isModalOpen, openModal, closeModal, toggleModal } = useModal();
 
-  const { isModalOpen, openModal, closeModal, toggleModal } = useModal(modalId);
-
-  useClickOutsideModal([selectRef, filterButtontRef], closeModal, modalId);
+  useClickOutsideModal(
+    [filterSelectRef, filterButtontRef],
+    closeModal,
+    'selectFilter'
+  );
 
   const windowWidth = useWindowWidth();
 
@@ -53,7 +59,7 @@ export const ProductList = ({ data, title, checkedRadio }) => {
 
   const { pathname } = useLocation();
 
-  const { isLoading, operation } = useProductState(pathname, PATCH_OPERATION);
+  const { isLoading, operation } = useProductState(pathname, method);
 
   const [filteredData, setFilteredData] = useState();
 
@@ -63,21 +69,31 @@ export const ProductList = ({ data, title, checkedRadio }) => {
 
   useEffect(() => {
     setFilterCaption(lang[local].onlyActiveCards);
-    setStatusFilter('active');
+    dispatch(setStatusFilter('active'));
     setFilteredData(data.filter(el => el.archived === false));
-  }, [data, local]);
+  }, [dispatch, data, local]);
 
   const openAskModalArhive = data => {
+    setMethod(PATCH_OPERATION);
     setCardData(data);
-    setModalId('askModal');
-    openModal('askModal');
+    openModal('askArchive');
   };
 
   const handleActionArchive = ({ id, archived }) => {
+    dispatch(setStatusFilter('active'));
     dispatch(operation({ id, data: { archived: !archived } }));
   };
 
-  const handleDeleteProduct = () => {};
+  const openAskModalDelete = data => {
+    setMethod(DELETE_OPERATION);
+    setCardData(data);
+    openModal('askDelete');
+  };
+
+  const handleActionDelete = ({ id }) => {
+    dispatch(setStatusFilter('active'));
+    dispatch(operation(id));
+  };
 
   const handleRadioChange = id => {
     if (id === 'active') {
@@ -95,7 +111,6 @@ export const ProductList = ({ data, title, checkedRadio }) => {
   };
 
   const onTogle = () => {
-    setModalId('selectFilter');
     toggleModal('selectFilter');
   };
 
@@ -119,7 +134,7 @@ export const ProductList = ({ data, title, checkedRadio }) => {
         onToggle={onTogle}
         local={local}
         checkedRadio={checkedRadio}
-        forwardedRef={selectRef}
+        forwardedRef={filterSelectRef}
       />
       <AddCardButton
         to={ADD_PRODUCT_PATH}
@@ -136,12 +151,14 @@ export const ProductList = ({ data, title, checkedRadio }) => {
         <ul>
           {filteredData?.map((el, i) => (
             <StyledLi key={el._id}>
-              <StyledImage
-                width={windowWidth > 413 ? 120 : 100}
-                src={el.imgURL}
-                alt={el.title_en}
-                color={colors[i]}
-              />
+              <ImgWrapper>
+                <StyledImage
+                  width={windowWidth > 413 ? 120 : 100}
+                  src={el.imgURL}
+                  alt={el.title_en}
+                  color={colors[i]}
+                />
+              </ImgWrapper>
               <CardContainer>
                 <CardTitle>
                   {local === LOCAL_EN
@@ -166,10 +183,12 @@ export const ProductList = ({ data, title, checkedRadio }) => {
                     <SvgIcon
                       w={windowWidth > 413 ? 24 : 18}
                       h={windowWidth > 413 ? 24 : 18}
-                      icon={'archive'}
+                      icon={el.archived ? 'unarchive' : 'archive'}
                     />
                   </CardButton>
-                  <CardButton onClick={handleDeleteProduct}>
+                  <CardButton
+                    onClick={() => openAskModalDelete({ id: el._id })}
+                  >
                     <SvgIcon
                       w={windowWidth > 413 ? 24 : 18}
                       h={windowWidth > 413 ? 24 : 18}
@@ -182,15 +201,30 @@ export const ProductList = ({ data, title, checkedRadio }) => {
           ))}
         </ul>
       )}
-      {isModalOpen?.askModal && (
-        <Modal onClose={closeModal}>
+      {isModalOpen?.askArchive && (
+        <Modal onClose={() => closeModal('askArchive')}>
           <AskModal
             action={handleActionArchive}
-            onCloseModal={closeModal}
+            onCloseModal={() => closeModal('askArchive')}
             data={cardData}
             names={{
               cancel: lang[local].cancel,
-              action: lang[local].archive
+              action: cardData.archived
+                ? lang[local].restore
+                : lang[local].archive
+            }}
+          />
+        </Modal>
+      )}
+      {isModalOpen?.askDelete && (
+        <Modal onClose={() => closeModal('askDelete')}>
+          <AskModal
+            action={handleActionDelete}
+            onCloseModal={() => closeModal('askDelete')}
+            data={cardData}
+            names={{
+              cancel: lang[local].cancel,
+              action: lang[local].delete
             }}
           />
         </Modal>

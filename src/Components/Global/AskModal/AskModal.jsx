@@ -11,26 +11,23 @@ import { useNavigate } from 'react-router-dom';
 export const AskModal = ({ action, backLink, onCloseModal, data, names }) => {
   const navigate = useNavigate();
   const { local } = useSelector(selectUser);
+  console.log('Data:', action);
 
-  const handleCencelClick = () => {
+  const onAction = () => {
     onCloseModal('askModal');
     if (backLink) navigate(backLink);
-    if (action) action({ id: data.id, archived: data.archived });
+    if (action) action(data);
   };
 
-  const handleRepeatClick = () => {
+  const onCencel = () => {
     onCloseModal('askModal');
   };
 
   return (
     <AskModalWrapper>
       <AskModalTitle>{lang[local].selectAnAction}</AskModalTitle>
-      <AskModalButton onClick={handleRepeatClick}>
-        {names.cancel}
-      </AskModalButton>
-      <AskModalButton onClick={handleCencelClick}>
-        {names.action}
-      </AskModalButton>
+      <AskModalButton onClick={onCencel}>{names.cancel}</AskModalButton>
+      <AskModalButton onClick={onAction}>{names.action}</AskModalButton>
     </AskModalWrapper>
   );
 };

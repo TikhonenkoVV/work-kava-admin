@@ -61,3 +61,18 @@ export const updateCoffeeWithMilk = createAsyncThunk(
     }
   }
 );
+
+export const deleteCoffeeWithMilk = createAsyncThunk(
+  'coffeewithmilks/deleteCoffeeWithMilk',
+  async (id, thunkAPI) => {
+    try {
+      const { data } = await workKavaInnstance.delete(`/coffeewithmilks/${id}`);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message,
+        status: error.response.status
+      });
+    }
+  }
+);

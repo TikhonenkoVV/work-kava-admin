@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 
-export const useModal = ref => {
+export const useModal = () => {
   const [isModalOpen, setIsModalOpen] = useState({
     selectFilter: false,
     langMenu: false,
-    askModal: false,
+    askAdd: false,
+    askArchive: false,
+    askDelete: false,
     mobileNav: false
   });
 
@@ -17,7 +19,7 @@ export const useModal = ref => {
     if (isOpen === false) {
       document.body.style.overflow = 'visible';
     }
-  }, [isModalOpen, ref]);
+  }, [isModalOpen]);
 
   const openModal = id => {
     setIsModalOpen({ ...isModalOpen, [id]: true });

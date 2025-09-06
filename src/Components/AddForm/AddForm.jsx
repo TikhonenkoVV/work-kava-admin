@@ -74,7 +74,7 @@ export const AddForm = () => {
     if (isValidValues) {
       dispatch(operation({ ...state, index: index }));
       formReset(e.current);
-      openModal('askModal');
+      openModal('askAdd');
     } else alert('Not all fields are filled in');
   };
 
@@ -129,11 +129,15 @@ export const AddForm = () => {
         </ImageWrapper>
         <StyledButton type="submit">{lang[local].submit}</StyledButton>
       </StyledForm>
-      {isModalOpen.askModal && !isLoading && (
-        <Modal id="askModal" forwardetRef={askModalRef} onClose={closeModal}>
+      {isModalOpen.askAdd && !isLoading && (
+        <Modal
+          id="askAdd"
+          forwardetRef={askModalRef}
+          onClose={() => closeModal('askAdd')}
+        >
           <AskModal
             backLink={pathname}
-            onCloseModal={closeModal}
+            onCloseModal={() => closeModal('askAdd')}
             names={{
               cancel: lang[local].addNewProduct,
               action: lang[local].baсkToProduktList

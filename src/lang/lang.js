@@ -20,7 +20,9 @@ export const lang = {
     onlyActiveCards: 'Only active cards',
     onlyArchivedCards: 'Only archived sards',
     cancel: 'Cancel',
-    archive: 'Archiv'
+    archive: 'Archiv',
+    restore: 'Restore',
+    delete: 'Delete'
   },
   'de-DE': {
     coffeeClassicTitle: 'Schwarzer Kaffee',
@@ -43,7 +45,9 @@ export const lang = {
     onlyActiveCards: 'Nur aktive Karten',
     onlyArchivedCards: 'Nur archivierte Karten',
     cancel: 'Abbrechen',
-    archive: 'Archive'
+    archive: 'Archive',
+    restore: 'Wiederherstellen',
+    delete: 'Löschen'
   },
   'uk-UA': {
     coffeeClassicTitle: 'Класична кава',
@@ -66,6 +70,8 @@ export const lang = {
     onlyActiveCards: 'Тільки активні картки',
     onlyArchivedCards: 'Тільки архівні картки',
     cancel: 'Відміна',
-    archive: 'Архівувати'
+    archive: 'Архівувати',
+    restore: 'Відновити',
+    delete: 'Видалити'
   }
 };

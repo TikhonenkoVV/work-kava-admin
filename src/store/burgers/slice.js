@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addBurger, getBurgers, updateBurger } from './operations';
+import {
+  addBurger,
+  deleteBurger,
+  getBurgers,
+  updateBurger
+} from './operations';
 
 const initialState = {
   burgers: [],
@@ -51,6 +56,21 @@ const burgersSlice = createSlice({
         state.error = null;
       })
       .addCase(updateBurger.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(deleteBurger.pending, (state, { payload }) => {
+        state.isLoading = true;
+        state.error = payload;
+      })
+      .addCase(deleteBurger.fulfilled, (state, { payload }) => {
+        state.burgers = state.burgers.filter(
+          burger => burger._id !== payload.deleted._id
+        );
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(deleteBurger.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       });

@@ -85,3 +85,18 @@ export const updateCoffeeClassic = createAsyncThunk(
     }
   }
 );
+
+export const deleteCoffeeClassic = createAsyncThunk(
+  'coffeeclassics/deleteCoffeeClassic',
+  async (id, thunkAPI) => {
+    try {
+      const { data } = await workKavaInnstance.delete(`/coffeeclassics/${id}`);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message,
+        status: error.response.status
+      });
+    }
+  }
+);

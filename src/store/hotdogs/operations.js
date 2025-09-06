@@ -58,3 +58,18 @@ export const updateHotDog = createAsyncThunk(
     }
   }
 );
+
+export const deleteHotDog = createAsyncThunk(
+  'hotdogs/deleteHotDog',
+  async (id, thunkAPI) => {
+    try {
+      const { data } = await workKavaInnstance.delete(`/hotdogs/${id}`);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message,
+        status: error.response.status
+      });
+    }
+  }
+);

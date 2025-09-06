@@ -59,10 +59,42 @@ export const StyledLi = styled.li`
   }
 `;
 
+export const ImgWrapper = styled.div`
+  position: relative;
+  width: 120px;
+  aspect-ratio: 3/2;
+  flex-shrink: 0;
+  &.archived {
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #40404080;
+      z-index: 1;
+    }
+  }
+  @media screen and (${({ theme }) => theme.devices.lessMobile}) {
+    width: 100px;
+  }
+`;
+
+export const StyledImage = styled.img`
+  width: 120px;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  border: 1px solid ${({ theme }) => theme.colors.primaryText};
+  border-radius: 4px;
+  background-color: ${({ color }) => color};
+`;
+
 export const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  flex-grow: 1;
 `;
 
 export const CardTitle = styled.h2`
@@ -96,17 +128,5 @@ export const CardButtonContainer = styled.div`
   justify-content: flex-end;
   @media screen and (${({ theme }) => theme.devices.lessMobile}) {
     column-gap: 12px;
-  }
-`;
-
-export const StyledImage = styled.img`
-  width: 120px;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-  border: 1px solid ${({ theme }) => theme.colors.primaryText};
-  border-radius: 4px;
-  background-color: ${({ color }) => color};
-  @media screen and (${({ theme }) => theme.devices.lessMobile}) {
-    width: 100px;
   }
 `;
