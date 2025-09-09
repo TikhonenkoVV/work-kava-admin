@@ -1,8 +1,6 @@
 import { text } from 'services/formBlockServices';
 import {
   BlockCaption,
-  Instruments,
-  InstrumentsWrapper,
   Label,
   StyledActionButton,
   StyledInput,
