@@ -1,4 +1,5 @@
 import { AddForm } from 'Components/AddForm/AddForm';
+import { EditForm } from 'Components/EditForm/EditForm';
 import { ProductList } from 'Components/ProductList/ProductList';
 import { useAuth } from 'hooks/useAuth';
 import { useProductState } from 'hooks/useProductState';
@@ -36,6 +37,8 @@ const Home = () => {
       <Container>
         {pathname === ADD_PRODUCT_PATH ? (
           <AddForm />
+        ) : pathname.split('/')[1] === 'edit' ? (
+          <EditForm />
         ) : (
           collection && <ProductList data={collection} title={title} />
         )}

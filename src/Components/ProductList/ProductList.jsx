@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
   AddCardButton,
-  CardButton,
   CardButtonContainer,
   CardContainer,
+  CardLink,
   CardTitle,
   CollectionTitle,
   FilterButton,
@@ -18,6 +18,7 @@ import { colors, getMaxIndex } from 'services/productList';
 import {
   ADD_PRODUCT_PATH,
   DELETE_OPERATION,
+  EDIT_PRODUCT_PATH,
   LOCAL_DE,
   LOCAL_EN,
   PATCH_OPERATION
@@ -34,6 +35,7 @@ import { useModal } from 'hooks/useModal';
 import { useClickOutsideModal } from 'hooks/useClickOutsideModal';
 import { Modal } from 'Components/Global/Modal/Modal';
 import { AskModal } from 'Components/Global/AskModal/AskModal';
+import { ActionButton } from 'styles/components.styled';
 
 export const ProductList = ({ data, title, checkedRadio }) => {
   const dispatch = useDispatch();
@@ -120,7 +122,7 @@ export const ProductList = ({ data, title, checkedRadio }) => {
       <CollectionTitle>{title}</CollectionTitle>
       <FilterButton onClick={onTogle} type="button" ref={filterButtontRef}>
         <SvgIcon w={16} h={16} icon={'filter'} />
-        <span>{filterCaption || lang[local].onlyActiveCards}</span>
+        <span>{filterCaption}</span>
         <Icon
           w={12}
           h={12}
@@ -151,12 +153,14 @@ export const ProductList = ({ data, title, checkedRadio }) => {
         <ul>
           {filteredData?.map((el, i) => (
             <StyledLi key={el._id}>
-              <ImgWrapper>
+              <ImgWrapper
+                color={colors[i]}
+                className={el.archived ? 'archived' : null}
+              >
                 <StyledImage
                   width={windowWidth > 413 ? 120 : 100}
                   src={el.imgURL}
                   alt={el.title_en}
-                  color={colors[i]}
                 />
               </ImgWrapper>
               <CardContainer>
@@ -168,14 +172,17 @@ export const ProductList = ({ data, title, checkedRadio }) => {
                     : el.title_ua}
                 </CardTitle>
                 <CardButtonContainer>
-                  <CardButton>
+                  <CardLink
+                    to={`${EDIT_PRODUCT_PATH}/${el._id}`}
+                    state={{ props: { pathname, index } }}
+                  >
                     <SvgIcon
                       w={windowWidth > 413 ? 24 : 18}
                       h={windowWidth > 413 ? 24 : 18}
                       icon={'edit'}
                     />
-                  </CardButton>
-                  <CardButton
+                  </CardLink>
+                  <ActionButton
                     onClick={() =>
                       openAskModalArhive({ id: el._id, archived: el.archived })
                     }
@@ -185,8 +192,8 @@ export const ProductList = ({ data, title, checkedRadio }) => {
                       h={windowWidth > 413 ? 24 : 18}
                       icon={el.archived ? 'unarchive' : 'archive'}
                     />
-                  </CardButton>
-                  <CardButton
+                  </ActionButton>
+                  <ActionButton
                     onClick={() => openAskModalDelete({ id: el._id })}
                   >
                     <SvgIcon
@@ -194,7 +201,7 @@ export const ProductList = ({ data, title, checkedRadio }) => {
                       h={windowWidth > 413 ? 24 : 18}
                       icon={'delete'}
                     />
-                  </CardButton>
+                  </ActionButton>
                 </CardButtonContainer>
               </CardContainer>
             </StyledLi>

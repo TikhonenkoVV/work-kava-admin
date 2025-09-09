@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { SvgIcon } from 'Components/Global/SvgIcon/SvgIcon';
 import { Link } from 'react-router-dom';
 import { StyledButton } from 'styles/components.styled';
+import bgrImg from '../../images/archived_240.png';
 
 export const CollectionTitle = styled.h1`
   margin-bottom: 16px;
@@ -64,6 +65,10 @@ export const ImgWrapper = styled.div`
   width: 120px;
   aspect-ratio: 3/2;
   flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid ${({ theme }) => theme.colors.primaryText};
+  border-radius: 10px;
+  background-color: ${({ color }) => color};
   &.archived {
     &::before {
       content: '';
@@ -74,6 +79,8 @@ export const ImgWrapper = styled.div`
       width: 100%;
       height: 100%;
       background-color: #40404080;
+      background-image: url(${bgrImg});
+      background-size: cover;
       z-index: 1;
     }
   }
@@ -86,9 +93,6 @@ export const StyledImage = styled.img`
   width: 120px;
   aspect-ratio: 3/2;
   object-fit: cover;
-  border: 1px solid ${({ theme }) => theme.colors.primaryText};
-  border-radius: 4px;
-  background-color: ${({ color }) => color};
 `;
 
 export const CardContainer = styled.div`
@@ -106,7 +110,7 @@ export const CardTitle = styled.h2`
   }
 `;
 
-export const CardButton = styled.button`
+export const CardLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;

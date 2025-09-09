@@ -102,7 +102,7 @@ const App = () => {
             }
           />
           <Route
-            path="/edit:id"
+            path="/edit/:id"
             element={
               <PrivateRoute redirectTo="/auth" component={<HomePage />} />
             }

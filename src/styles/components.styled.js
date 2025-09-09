@@ -58,3 +58,19 @@ export const StyledLink = styled(Link)`
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.buttonsBackground};
 `;
+
+export const ActionButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid ${({ theme }) => theme.colors.primaryText};
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.buttonsBackground};
+
+  @media screen and (${({ theme }) => theme.devices.lessMobile}) {
+    width: 30px;
+    height: 30px;
+  }
+`;

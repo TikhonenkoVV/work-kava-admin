@@ -18,6 +18,7 @@ export const LOCAL_UA = 'uk-UA';
 
 export const HOME_PATH = '/';
 export const ADD_PRODUCT_PATH = '/add-product';
+export const EDIT_PRODUCT_PATH = '/edit';
 export const COFFE_CLASSIC_PATH = '/coffee-classic';
 export const COFFE_WITH_MILK_PATH = '/coffee-with-milk';
 export const DESSERTS_PATH = '/desserts';

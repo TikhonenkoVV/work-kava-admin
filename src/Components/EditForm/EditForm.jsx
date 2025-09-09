@@ -1,80 +1,87 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   BackLink,
   FormCaption,
   FormTitle,
   ImageWrapper,
   StyledForm
-} from './AddForm.styled';
-import { useLocation, useNavigate } from 'react-router-dom';
+} from './EditForm.styled';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FormBlock } from './Components/FormBlock/FormBlock';
-import { createData, newInit, validateFormData } from 'services/addForm';
+import { createData, validateFormData } from 'services/addForm';
 import { FormBlockFile } from './Components/FormBlockFile/FormBlockFile';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from 'Components/Global/Loader/Loader';
 import { useProductState } from 'hooks/useProductState';
 import { lang } from 'lang/lang';
 import { selectUser } from 'store/auth/selectors';
-import { POST_OPERATION } from 'utils/GlobalUtils';
+import { LOCAL_DE, LOCAL_EN, PATCH_OPERATION } from 'utils/GlobalUtils';
 import { Modal } from 'Components/Global/Modal/Modal';
 import { useModal } from 'hooks/useModal';
-import { getTitle } from 'services/home';
 import { StyledButton } from 'styles/components.styled';
 import { AskModal } from 'Components/Global/AskModal/AskModal';
 
-export const AddForm = () => {
-  const { local } = useSelector(selectUser);
-
-  const navigate = useNavigate();
-
+export const EditForm = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const [product, setProduct] = useState();
+  const { id } = useParams();
+  const { local } = useSelector(selectUser);
   const askModalRef = useRef(null);
   const formRef = useRef(null);
   const { isModalOpen, openModal, closeModal } = useModal('askAdd');
   const location = useLocation();
+
   const props = useRef(location?.state?.props);
+
   const pathname = props?.current?.pathname;
-  const title = getTitle(pathname, local);
 
   const data = createData(pathname);
 
-  const { isLoading, operation } = useProductState(pathname, POST_OPERATION);
+  const { isLoading, collection, operation } = useProductState(
+    pathname,
+    PATCH_OPERATION
+  );
 
-  const index = props?.current?.index;
-
-  const initialFormData = newInit(data);
-
-  const [state, setState] = useState(initialFormData);
+  const [state, setState] = useState();
   const [image, setImage] = useState({
     img: null,
     webpImg: null
   });
+
+  useEffect(() => {
+    if (id) {
+      const i = collection.findIndex(product => product._id === id);
+      setProduct(collection[i]);
+      setImage({
+        img: collection[i].imgURL,
+        webpImg: collection[i].webpImgURL
+      });
+    }
+  }, [id, collection]);
 
   const onChange = e => {
     const { name, value } = e.target;
     const isNumber = Number(value);
     let newValue = value;
     if (!isNaN(value)) newValue = isNumber;
-    setState({ ...state, [name]: newValue });
-  };
-
-  const formReset = () => {
-    formRef.current.reset();
-    setImage({
-      img: null,
-      webpImg: null
-    });
+    if (newValue === product[name]) {
+      setState(state => {
+        const newState = { ...state };
+        delete newState[name];
+        return newState;
+      });
+    } else setState({ ...state, [name]: newValue });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (!state) {
+      return alert('Not all fields are filled in');
+    }
     const isValidValues = validateFormData(state);
-    if (isValidValues) {
-      dispatch(operation({ ...state, index: index }));
-      formReset(e.current);
-      openModal('askAdd');
-    } else alert('Not all fields are filled in');
+    if (isValidValues) openModal('askEdit');
+    else alert('Not all fields are filled in');
   };
 
   const handleImageChange = e => {
@@ -90,7 +97,8 @@ export const AddForm = () => {
     }
   };
 
-  const handleActionAdd = prop => {
+  const handleActionEdit = prop => {
+    dispatch(operation({ id: id, data: state }));
     navigate(prop);
   };
 
@@ -98,24 +106,36 @@ export const AddForm = () => {
     <>
       {isLoading && <Loader />}
       <BackLink to={pathname}>{lang[local].baсkToProduktList}</BackLink>
-      <FormTitle>{title}</FormTitle>
-      <FormCaption>{lang[local].addNewProduct}</FormCaption>
+      <FormTitle>
+        {local === LOCAL_EN
+          ? product?.title_en
+          : local === LOCAL_DE
+          ? product?.title_de
+          : product?.title_ua}
+      </FormTitle>
+      <FormCaption>{lang[local].editProduct}</FormCaption>
       <StyledForm ref={formRef} onSubmit={handleSubmit}>
         <FormBlock
           data={data.title}
           title={lang[local].nameTitle}
           onChange={onChange}
+          product={product}
+          type="text"
         />
         <FormBlock
           data={data.price}
           title={lang[local].priceTitle}
           onChange={onChange}
+          product={product}
+          type="number"
         />
         {data?.ingredients && (
           <FormBlock
             data={data.ingredients}
             title={lang[local].ingredientsTitle}
             onChange={onChange}
+            product={product}
+            type="text"
           />
         )}
         {data?.weight && (
@@ -123,6 +143,8 @@ export const AddForm = () => {
             data={data.weight}
             title={lang[local].weightTitle}
             onChange={onChange}
+            product={product}
+            type="number"
           />
         )}
         <FormBlockFile onChange={handleImageChange} />
@@ -132,19 +154,19 @@ export const AddForm = () => {
         </ImageWrapper>
         <StyledButton type="submit">{lang[local].submit}</StyledButton>
       </StyledForm>
-      {isModalOpen.askAdd && !isLoading && (
+      {isModalOpen.askEdit && (
         <Modal
-          id="askAdd"
+          id="askEdit"
           forwardetRef={askModalRef}
-          onClose={() => closeModal('askAdd')}
+          onClose={() => closeModal('askEdit')}
         >
           <AskModal
-            action={handleActionAdd}
-            onCloseModal={() => closeModal('askAdd')}
+            action={handleActionEdit}
             data={pathname}
+            onCloseModal={() => closeModal('askEdit')}
             names={{
-              cancel: lang[local].addNewProduct,
-              action: lang[local].baсkToProduktList
+              cancel: lang[local].cancel,
+              action: lang[local].submit
             }}
           />
         </Modal>

@@ -5,6 +5,7 @@ export const useModal = () => {
     selectFilter: false,
     langMenu: false,
     askAdd: false,
+    askEdit: false,
     askArchive: false,
     askDelete: false,
     mobileNav: false

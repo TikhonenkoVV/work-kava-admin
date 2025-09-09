@@ -6,21 +6,17 @@ import {
 } from './AskModal.styled';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'store/auth/selectors';
-import { useNavigate } from 'react-router-dom';
 
-export const AskModal = ({ action, backLink, onCloseModal, data, names }) => {
-  const navigate = useNavigate();
+export const AskModal = ({ action, onCloseModal, data, names }) => {
   const { local } = useSelector(selectUser);
-  console.log('Data:', action);
 
   const onAction = () => {
-    onCloseModal('askModal');
-    if (backLink) navigate(backLink);
+    onCloseModal();
     if (action) action(data);
   };
 
   const onCencel = () => {
-    onCloseModal('askModal');
+    onCloseModal();
   };
 
   return (
