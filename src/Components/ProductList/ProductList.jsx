@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   AddCardButton,
   CardButtonContainer,
-  CardContainer,
   CardLink,
   CardTitle,
   CollectionTitle,
@@ -10,7 +9,8 @@ import {
   Icon,
   ImgWrapper,
   StyledImage,
-  StyledLi
+  StyledLi,
+  StyledList
 } from './ProductList.styled';
 import { SvgIcon } from 'Components/Global/SvgIcon/SvgIcon';
 import { useLocation } from 'react-router-dom';
@@ -119,7 +119,9 @@ export const ProductList = ({ data, title, checkedRadio }) => {
   return (
     <>
       {isLoading && <Loader />}
-      <CollectionTitle>{title}</CollectionTitle>
+      <CollectionTitle>
+        {title} {windowWidth}
+      </CollectionTitle>
       <FilterButton onClick={onTogle} type="button" ref={filterButtontRef}>
         <SvgIcon w={16} h={16} icon={'filter'} />
         <span>{filterCaption}</span>
@@ -150,63 +152,49 @@ export const ProductList = ({ data, title, checkedRadio }) => {
         <span>{lang[local].addNewProduct}</span>
       </AddCardButton>
       {filteredData?.length > 0 && (
-        <ul>
+        <StyledList>
           {filteredData?.map((el, i) => (
             <StyledLi key={el._id}>
+              <CardTitle>
+                {local === LOCAL_EN
+                  ? el.title_en
+                  : local === LOCAL_DE
+                  ? el.title_de
+                  : el.title_ua}
+              </CardTitle>
               <ImgWrapper
                 color={colors[i]}
                 className={el.archived ? 'archived' : null}
               >
-                <StyledImage
-                  width={windowWidth > 413 ? 120 : 100}
-                  src={el.imgURL}
-                  alt={el.title_en}
-                />
+                <StyledImage width={120} src={el.imgURL} alt={el.title_en} />
               </ImgWrapper>
-              <CardContainer>
-                <CardTitle>
-                  {local === LOCAL_EN
-                    ? el.title_en
-                    : local === LOCAL_DE
-                    ? el.title_de
-                    : el.title_ua}
-                </CardTitle>
-                <CardButtonContainer>
-                  <CardLink
-                    to={`${EDIT_PRODUCT_PATH}/${el._id}`}
-                    state={{ props: { pathname, index } }}
-                  >
-                    <SvgIcon
-                      w={windowWidth > 413 ? 24 : 18}
-                      h={windowWidth > 413 ? 24 : 18}
-                      icon={'edit'}
-                    />
-                  </CardLink>
-                  <ActionButton
-                    onClick={() =>
-                      openAskModalArhive({ id: el._id, archived: el.archived })
-                    }
-                  >
-                    <SvgIcon
-                      w={windowWidth > 413 ? 24 : 18}
-                      h={windowWidth > 413 ? 24 : 18}
-                      icon={el.archived ? 'unarchive' : 'archive'}
-                    />
-                  </ActionButton>
-                  <ActionButton
-                    onClick={() => openAskModalDelete({ id: el._id })}
-                  >
-                    <SvgIcon
-                      w={windowWidth > 413 ? 24 : 18}
-                      h={windowWidth > 413 ? 24 : 18}
-                      icon={'delete'}
-                    />
-                  </ActionButton>
-                </CardButtonContainer>
-              </CardContainer>
+              <CardButtonContainer>
+                <CardLink
+                  to={`${EDIT_PRODUCT_PATH}/${el._id}`}
+                  state={{ props: { pathname, index } }}
+                >
+                  <SvgIcon w={24} h={24} icon={'edit'} />
+                </CardLink>
+                <ActionButton
+                  onClick={() =>
+                    openAskModalArhive({ id: el._id, archived: el.archived })
+                  }
+                >
+                  <SvgIcon
+                    w={24}
+                    h={24}
+                    icon={el.archived ? 'unarchive' : 'archive'}
+                  />
+                </ActionButton>
+                <ActionButton
+                  onClick={() => openAskModalDelete({ id: el._id })}
+                >
+                  <SvgIcon w={24} h={24} icon={'delete'} />
+                </ActionButton>
+              </CardButtonContainer>
             </StyledLi>
           ))}
-        </ul>
+        </StyledList>
       )}
       {isModalOpen?.askArchive && (
         <Modal onClose={() => closeModal('askArchive')}>

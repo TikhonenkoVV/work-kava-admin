@@ -44,12 +44,35 @@ export const addHotDog = createAsyncThunk(
 export const updateHotDog = createAsyncThunk(
   'hotdogs/updateHotDog',
   async (hotDogData, thunkAPI) => {
+    const credentials = hotDogData.data;
     try {
       const { data } = await workKavaInnstance.patch(
         `/hotdogs/${hotDogData.id}`,
-        hotDogData.data
+        credentials
       );
-      return data;
+
+      const id = data.updated._id;
+
+      const { img, webpImg } = credentials;
+      const imageData = { img, webpImg };
+
+      const keys = Object.keys(imageData);
+
+      if (!img && !webpImg) {
+        return data;
+      } else {
+        const formData = new FormData();
+        formData.set('id', id);
+        keys.forEach(el => {
+          if (imageData[el]) formData.append(el, imageData[el]);
+        });
+        const { data: images } = await workKavaInnstance.post(
+          '/hotdogs/images',
+          formData
+        );
+
+        return { ...data, ...images };
+      }
     } catch (error) {
       return thunkAPI.rejectWithValue({
         message: error.response.data.message,

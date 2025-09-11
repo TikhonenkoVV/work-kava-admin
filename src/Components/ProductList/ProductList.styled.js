@@ -36,35 +36,42 @@ export const AddCardButton = styled(Link)`
   background-color: ${({ theme }) => theme.colors.buttonsBackground};
 `;
 
-export const StyledList = styled.ul``;
+export const StyledList = styled.ul`
+  @media screen and (${({ theme }) => theme.devices.mobile}) {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    justify-content: flex-start;
+  }
+`;
 
 export const StyledLi = styled.li`
-  display: flex;
-  column-gap: 16px;
-  padding-left: 16px;
-  padding-top: 16px;
-  padding-right: 16px;
-  padding-bottom: 16px;
+  padding-inline-start: 12px;
+  padding-block-start: 12px;
+  padding-inline-end: 12px;
+  padding-block-end: 12px;
   border: 1px solid ${({ theme }) => theme.colors.primaryText};
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors.elementsBackground};
-  &:not(:last-child) {
-    margin-bottom: 16px;
-  }
   @media screen and (${({ theme }) => theme.devices.lessMobile}) {
-    column-gap: 12px;
-    padding-left: 12px;
-    padding-top: 12px;
-    padding-right: 12px;
-    padding-bottom: 12px;
+    &:not(:last-child) {
+      margin-block-end: 16px;
+    }
   }
+`;
+
+export const CardTitle = styled.h2`
+  margin-block-end: 10px;
+  font-size: 18px;
+  line-height: 1;
 `;
 
 export const ImgWrapper = styled.div`
   position: relative;
-  width: 120px;
-  aspect-ratio: 3/2;
+  width: 100%;
+  aspect-ratio: 47/26;
   flex-shrink: 0;
+  margin-block-end: 10px;
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.colors.primaryText};
   border-radius: 10px;
@@ -84,30 +91,18 @@ export const ImgWrapper = styled.div`
       z-index: 1;
     }
   }
-  @media screen and (${({ theme }) => theme.devices.lessMobile}) {
-    width: 100px;
-  }
 `;
 
 export const StyledImage = styled.img`
-  width: 120px;
-  aspect-ratio: 3/2;
+  width: 100%;
+  aspect-ratio: 47/26;
   object-fit: cover;
 `;
 
-export const CardContainer = styled.div`
+export const CardButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-`;
-
-export const CardTitle = styled.h2`
-  font-size: 18px;
-  line-height: 1;
-  margin-bottom: auto;
-  @media screen and (${({ theme }) => theme.devices.lessMobile}) {
-    font-size: 16px;
-  }
+  column-gap: 16px;
+  justify-content: center;
 `;
 
 export const CardLink = styled(Link)`
@@ -119,18 +114,4 @@ export const CardLink = styled(Link)`
   border: 2px solid ${({ theme }) => theme.colors.primaryText};
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.buttonsBackground};
-
-  @media screen and (${({ theme }) => theme.devices.lessMobile}) {
-    width: 30px;
-    height: 30px;
-  }
-`;
-
-export const CardButtonContainer = styled.div`
-  display: flex;
-  column-gap: 16px;
-  justify-content: flex-end;
-  @media screen and (${({ theme }) => theme.devices.lessMobile}) {
-    column-gap: 12px;
-  }
 `;

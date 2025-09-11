@@ -41,12 +41,35 @@ export const addRoll = createAsyncThunk(
 export const updateRoll = createAsyncThunk(
   'rolls/updateRoll',
   async (rollData, thunkAPI) => {
+    const credentials = rollData.data;
     try {
       const { data } = await workKavaInnstance.patch(
         `/rolls/${rollData.id}`,
-        rollData.data
+        credentials
       );
-      return data;
+
+      const id = data.updated._id;
+
+      const { img, webpImg } = credentials;
+      const imageData = { img, webpImg };
+
+      const keys = Object.keys(imageData);
+
+      if (!img && !webpImg) {
+        return data;
+      } else {
+        const formData = new FormData();
+        formData.set('id', id);
+        keys.forEach(el => {
+          if (imageData[el]) formData.append(el, imageData[el]);
+        });
+        const { data: images } = await workKavaInnstance.post(
+          '/rolls/images',
+          formData
+        );
+
+        return { ...data, ...images };
+      }
     } catch (error) {
       return thunkAPI.rejectWithValue({
         message: error.response.data.message,

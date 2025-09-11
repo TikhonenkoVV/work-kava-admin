@@ -82,22 +82,24 @@ export const updateCoffeeClassic = createAsyncThunk(
 
       const { img, webpImg } = credentials;
       const imageData = { img, webpImg };
-      console.log('imageData', imageData);
 
       const keys = Object.keys(imageData);
-      const formData = new FormData();
-      formData.set('id', id);
-      keys.forEach(el => {
-        if (imageData[el]) formData.append(el, imageData[el]);
-      });
-      const { data: images } = await workKavaInnstance.post(
-        '/coffeeclassics/images',
-        formData
-      );
 
-      return { ...data, ...images };
+      if (!img && !webpImg) {
+        return data;
+      } else {
+        const formData = new FormData();
+        formData.set('id', id);
+        keys.forEach(el => {
+          if (imageData[el]) formData.append(el, imageData[el]);
+        });
+        const { data: images } = await workKavaInnstance.post(
+          '/coffeeclassics/images',
+          formData
+        );
 
-      // return data;
+        return { ...data, ...images };
+      }
     } catch (error) {
       return thunkAPI.rejectWithValue({
         message: error.response.data.message,

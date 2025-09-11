@@ -44,12 +44,33 @@ export const addBurger = createAsyncThunk(
 export const updateBurger = createAsyncThunk(
   'burgers/updateBurger',
   async (burgerData, thunkAPI) => {
+    const credentials = burgerData.data;
     try {
       const { data } = await workKavaInnstance.patch(
         `/burgers/${burgerData.id}`,
-        burgerData.data
+        credentials
       );
-      return data;
+      const id = data.updated._id;
+
+      const { img, webpImg } = credentials;
+      const imageData = { img, webpImg };
+
+      const keys = Object.keys(imageData);
+      if (!img && !webpImg) {
+        return data;
+      } else {
+        const formData = new FormData();
+        formData.set('id', id);
+        keys.forEach(el => {
+          if (imageData[el]) formData.append(el, imageData[el]);
+        });
+        const { data: images } = await workKavaInnstance.post(
+          '/burgers/images',
+          formData
+        );
+
+        return { ...data, ...images };
+      }
     } catch (error) {
       return thunkAPI.rejectWithValue({
         message: error.response.data.message,
